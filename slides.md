@@ -416,36 +416,95 @@ Coins = `{1, 3, 4}`, target = `6`
 layout: two-cols
 ---
 
+# DP ≠ Combinatorix
+
+<div class="mt-6 text-2xl">
+
+$$C_n = \frac{1}{n+1}\binom{2n}{n}$$
+
+$C_0 = \frac{1}{1}\binom{0}{0} = 1$
+
+$C_1 = \frac{1}{2}\binom{2}{1} = 1$
+
+$C_2 = \frac{1}{3}\binom{4}{2} = 2$
+
+$C_3 = \frac{1}{4}\binom{6}{3} = 5$
+
+$C_4 = \frac{1}{5}\binom{8}{4} = 14$
+
+$C_5 = \frac{1}{6}\binom{10}{5} = 42$
+
+</div>
+
 ::right::
 
-# DP ≠ Combinatorial Formulas
-
-<div class="lead">
-Catalan numbers, binomial coefficients, Fibonacci — they can be computed via <span class="accent">closed-form formulas</span> or via <span class="accent">DP recurrence</span>.
-</div>
-
-- Closed-form: $C_n = \frac{1}{n+1}\binom{2n}{n}$ — fast, but you need to know the formula
-- DP recurrence: $C_n = \sum_{i=0}^{n-1} C_i \cdot C_{n-1-i}$ — universal, works when no formula exists
-- We use DP when:
-  - The problem has recursive structure
-  - No closed-form exists or it's impractical
-
-::left::
-
-<div class="problem-card mt-8 mr-4">
-  <div class="text-sm uppercase tracking-[0.2em] text-[var(--brand-accent)] font-semibold">Catalan Numbers in the Wild</div>
-</div>
-
-All of these count $C_n$:
-
-- Number of valid parentheses sequences
-- Number of distinct BSTs with $n$ nodes
-- Number of ways to triangulate a polygon
-- Number of monotonic lattice paths
-
-<div class="pt-1 tiny text-[var(--text-muted)]">
-Same formula, but in real problems you arrive at it through DP thinking — defining subproblems, not memorizing formulas.
-</div>
+<svg viewBox="0 0 320 320" class="mt-10 w-full mx-auto" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .cell { fill: #1e293b; stroke: #334155; stroke-width: 1; }
+    .cell-diag { fill: #0d9488; fill-opacity: 0.25; stroke: #2dd4bf; stroke-width: 1.5; }
+    .num { fill: #e2e8f0; font-family: monospace; font-size: 14px; text-anchor: middle; dominant-baseline: central; }
+    .num-diag { fill: #2dd4bf; font-family: monospace; font-size: 14px; font-weight: bold; text-anchor: middle; dominant-baseline: central; }
+    .cell-hl { fill: #f59e0b; fill-opacity: 0.2; stroke: #fbbf24; stroke-width: 1.5; }
+    .num-hl { fill: #fbbf24; font-family: monospace; font-size: 14px; font-weight: bold; text-anchor: middle; dominant-baseline: central; }
+    .arrow { stroke: #fbbf24; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+  </style>
+  <defs>
+    <marker id="arr" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
+      <path d="M0,0 L6,2 L0,4" fill="#fbbf24"/>
+    </marker>
+  </defs>
+  <!-- row 0 -->
+  <rect x="10" y="10" width="38" height="38" rx="4" class="cell-diag"/>
+  <text x="29" y="29" class="num-diag">1</text>
+  <!-- row 1 -->
+  <rect x="10" y="62" width="38" height="38" rx="4" class="cell"/>
+  <text x="29" y="81" class="num">1</text>
+  <rect x="62" y="62" width="38" height="38" rx="4" class="cell-diag"/>
+  <text x="81" y="81" class="num-diag">1</text>
+  <!-- row 2 -->
+  <rect x="10" y="114" width="38" height="38" rx="4" class="cell"/>
+  <text x="29" y="133" class="num">1</text>
+  <rect x="62" y="114" width="38" height="38" rx="4" class="cell"/>
+  <text x="81" y="133" class="num">2</text>
+  <rect x="114" y="114" width="38" height="38" rx="4" class="cell-diag"/>
+  <text x="133" y="133" class="num-diag">2</text>
+  <!-- row 3 -->
+  <rect x="10" y="166" width="38" height="38" rx="4" class="cell"/>
+  <text x="29" y="185" class="num">1</text>
+  <rect x="62" y="166" width="38" height="38" rx="4" class="cell"/>
+  <text x="81" y="185" class="num">3</text>
+  <rect x="114" y="166" width="38" height="38" rx="4" class="cell"/>
+  <text x="133" y="185" class="num">5</text>
+  <rect x="166" y="166" width="38" height="38" rx="4" class="cell-diag"/>
+  <text x="185" y="185" class="num-diag">5</text>
+  <!-- row 4 -->
+  <rect x="10" y="218" width="38" height="38" rx="4" class="cell"/>
+  <text x="29" y="237" class="num">1</text>
+  <rect x="62" y="218" width="38" height="38" rx="4" class="cell"/>
+  <text x="81" y="237" class="num">4</text>
+  <rect x="114" y="218" width="38" height="38" rx="4" class="cell-hl"/>
+  <text x="133" y="237" class="num-hl">9</text>
+  <!-- arrows: 4 (left) + 5 (above) = 9 -->
+  <path d="M101,237 L112,237" class="arrow"/>
+  <path d="M133,205 L133,216" class="arrow"/>
+  <rect x="166" y="218" width="38" height="38" rx="4" class="cell"/>
+  <text x="185" y="237" class="num">14</text>
+  <rect x="218" y="218" width="38" height="38" rx="4" class="cell-diag"/>
+  <text x="237" y="237" class="num-diag">14</text>
+  <!-- row 5 -->
+  <rect x="10" y="270" width="38" height="38" rx="4" class="cell"/>
+  <text x="29" y="289" class="num">1</text>
+  <rect x="62" y="270" width="38" height="38" rx="4" class="cell"/>
+  <text x="81" y="289" class="num">5</text>
+  <rect x="114" y="270" width="38" height="38" rx="4" class="cell"/>
+  <text x="133" y="289" class="num">14</text>
+  <rect x="166" y="270" width="38" height="38" rx="4" class="cell"/>
+  <text x="185" y="289" class="num">28</text>
+  <rect x="218" y="270" width="38" height="38" rx="4" class="cell"/>
+  <text x="237" y="289" class="num">42</text>
+  <rect x="270" y="270" width="38" height="38" rx="4" class="cell-diag"/>
+  <text x="289" y="289" class="num-diag">42</text>
+</svg>
 
 ---
 
