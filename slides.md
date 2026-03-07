@@ -339,70 +339,76 @@ Memoization is a <span class="accent">technique</span> that often implements DP,
 layout: two-cols
 ---
 
-<div class="problem-card mt-8 mr-4">
-  <div class="text-sm uppercase tracking-[0.2em] text-[var(--brand-accent)] font-semibold">When Greedy Breaks</div>
-  <div class="pt-3 text-sm">
+<div class="mr-4">
+  <div class="problem-card">
+    <div class="text-sm uppercase tracking-[0.2em] text-red-400 font-semibold">When Greedy Breaks</div>
 
 Coins = `{1, 3, 4}`, target = `6`
 
-🟥 Greedy: `4 + 1 + 1` = 3 coins
+🟥 Greedy is not optimal: `4 + 1 + 1` = 3 coins
 
 🟩 DP: `3 + 3` = 2 coins
 
   </div>
-  <div class="pt-4 tiny text-[var(--text-muted)]">
-    Greedy never reconsiders. DP systematically evaluates all subproblems.
+  <div class="mt-3 w-4/5 mx-auto h-88 rounded shadow">
+    <img src="/subway-surfers.gif" alt="Subway Surfers collecting coins" class="w-full h-full object-cover object-center" />
   </div>
 </div>
-
-вот сюда гифку с сабвэй сёрфера вставить где монеты собирают
 
 ::right::
 
 # DP ≠ Greedy
 
-<div class="lead">
-Greedy makes the <span class="accent">locally best</span> choice and never looks back. DP considers <span class="accent">all options</span> via subproblems.
-</div>
-
+- Greedy makes the <span class="accent">locally best</span> and never looks back
 - Greedy works when local optimum guarantees global optimum
-- DP works when you must explore multiple paths and combine results
 - Classic example: **Coin Change**
-  - Greedy works for `{1, 5, 10, 25}` — always pick the biggest coin
-  - Greedy fails for `{1, 3, 4}`, target `6`: greedy gives `4+1+1`, DP gives `3+3`
+  - <span class="text-green-400">Greedy works</span> for `{1, 5, 10, 25}` — always pick the biggest coin
+  - <span class="text-red-400">Greedy fails</span> for `{1, 3, 4}`, target `6`: greedy gives `4+1+1`, DP gives `3+3`
 
 ---
-layout: two-cols
----
-
-::right::
 
 # DP ≠ Backtracking
 
-<div class="lead">
-Backtracking explores a <span class="accent">decision tree</span> exhaustively. DP <span class="accent">reuses</span> computed results across branches.
-</div>
-
-- Backtracking: try a choice → recurse → undo if it fails
-- It's brute force with pruning
-- DP also explores choices, but stores and reuses subproblem results
-- Add memoization to backtracking → you essentially get DP
-
-::left::
-
-<div class="problem-card mt-8 mr-4">
-  <div class="text-sm uppercase tracking-[0.2em] text-[var(--brand-accent)] font-semibold">The Spectrum</div>
-  <div class="pt-3 text-sm">
-
-**Brute force** — try everything: $O(2^n)$
-
-**Backtracking** — try everything, prune early: still exponential
-
-**DP** — try everything, but cache overlapping work: polynomial
+<div class="grid grid-cols-3 gap-6 mt-12 text-center">
+  <div>
+    <div class="text-5xl mb-4 opacity-40">🌳</div>
+    <pre class="text-xs leading-tight inline-block text-left opacity-50">
+    *
+   / \
+  *   *
+ /\   /\
+*  * *  *
+    </pre>
+    <div class="mt-4 text-lg font-bold text-gray-400">Brute Force</div>
+    <div class="text-sm text-gray-500 mt-1">visit every node</div>
+    <div class="mt-2 font-mono text-red-400">O(2ⁿ)</div>
 
   </div>
-  <div class="pt-4 tiny text-[var(--text-muted)]">
-    If your backtracking solution revisits the same state — it's begging to become DP.
+  <div>
+    <div class="text-5xl mb-4">🌳</div>
+    <pre class="text-xs leading-tight inline-block text-left">
+    *
+   / \
+  *   <span class="text-gray-600">✗</span>
+ /\
+<span class="text-gray-600">✗</span>  *
+    </pre>
+    <div class="mt-4 text-lg font-bold text-yellow-400">Backtracking</div>
+    <div class="text-sm text-gray-500 mt-1">prune bad branches</div>
+    <div class="mt-2 font-mono text-red-400">O(2ⁿ)</div>
+  </div>
+  <div>
+    <div class="text-5xl mb-4">🧠</div>
+    <pre class="text-xs leading-tight inline-block text-left">
+    *
+   / \
+  *   * ✓ reuse
+ /\
+*  * ✓ cache 
+    </pre>
+    <div class="mt-4 text-lg font-bold text-[var(--brand-accent)]">DP</div>
+    <div class="text-sm text-gray-500 mt-1">cache &amp; reuse subproblems</div>
+    <div class="mt-2 font-mono text-green-400">polynomial</div>
   </div>
 </div>
 
