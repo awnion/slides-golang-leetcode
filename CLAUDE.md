@@ -2,3 +2,6 @@
 - Use `uv` / `uvx` for Python
 - Use `rg` instead of `grep`, `fd` instead of `find`
 - Use skill `slidev` (if the skill doesn't load, notify the user)
+- Ignore light theme, we won't need it
+- Before you finish a slide export it as an image and load as a context for yourself to evaluate if everything is aesthetically ok: proper margins, no small text, good contrast on dark theme
+- NEVER open something for the user

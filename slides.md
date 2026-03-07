@@ -35,16 +35,78 @@ layout: center
 </div>
 
 ---
-layout: center
+layout: full
 ---
 
-# About Me
+<div class="w-full h-full relative overflow-hidden">
 
-Sergei Blinov
+<!--
+  Layout grid (960x540):
+  Top row:    [Gopher]  [P≠NP]  [PostgreSQL]  [Euler]  [Ferris]
+  Mid row:    [Docker]  [Bayes]            [Basel]  [React]
+  Bot row:    [Python]  [Correlation]  [O(n log n)]  [Bun]
+-->
 
-- `Senior Software Engineer at AckiNacki`
-- `Math enthusiast`
-- `Programming language polyglot`
+<!-- Top row icons -->
+<img src="/icon-golang.png" class="absolute" style="width:100px; top:12px; left:35px; opacity:0.8; transform:rotate(-12deg)" />
+<img src="/icon-postgresql.png" class="absolute" style="width:80px; top:8px; left:50%; opacity:0.7; transform:translateX(-40px) rotate(7deg)" />
+<img src="/icon-rust.png" class="absolute" style="width:100px; top:12px; right:35px; opacity:0.8; transform:rotate(10deg)" />
+
+<!-- Middle row icons -->
+<img src="/icon-docker.png" class="absolute" style="width:100px; top:50%; left:30px; opacity:0.65; transform:translateY(-50%) rotate(8deg)" />
+<img src="/icon-react.svg" class="absolute" style="width:88px; top:50%; right:30px; opacity:0.65; transform:translateY(-50%) rotate(-11deg)" />
+
+<!-- Bottom row icons -->
+<img src="/icon-python.png" class="absolute" style="width:80px; bottom:20px; left:40px; opacity:0.75; transform:rotate(-14deg)" />
+<div class="absolute" style="bottom:8px; left:50%; opacity:0.75; transform:translateX(-200px)">
+  <div style="font-size:13px; text-align:center; margin-bottom:4px; color:#D97757; font-style:italic; white-space:nowrap; font-weight:bold">You're absolutely right!</div>
+  <img src="/icon-claude.svg" style="width:65px; margin:0 auto; display:block" />
+</div>
+<img src="/icon-ansible.png" class="absolute" style="width:80px; bottom:10px; left:50%; opacity:0.6; transform:translateX(40px) rotate(9deg)" />
+<img src="/icon-bun.png" class="absolute" style="width:80px; bottom:20px; right:40px; opacity:0.75; transform:rotate(12deg)" />
+
+<!-- Top row formulas (between icons) -->
+<div class="absolute" style="top:50px; left:185px; opacity:0.40">
+
+$P \neq NP$ ???
+
+</div>
+<div class="absolute" style="top:40px; right:175px; opacity:0.40">
+
+$e^{i\pi} + 1 = 0$
+
+</div>
+
+<!-- Middle row formulas (between icons and center) -->
+<div class="absolute" style="top:50%; left:170px; opacity:0.35; transform:translateY(-40px)">
+
+$\sum \frac{1}{n^2} = \frac{\pi^2}{6}$
+
+</div>
+<div class="absolute" style="top:50%; right:160px; opacity:0.35; transform:translateY(-40px); font-size:13px">
+
+$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}$
+
+</div>
+
+<!-- Bottom row formulas (between icons) -->
+<div class="absolute" style="bottom:40px; right:160px; opacity:0.35">
+
+$O(n \log n)$
+
+</div>
+
+<!-- Main content centered -->
+<div class="absolute inset-0 flex flex-col items-center justify-center z-10">
+  <div class="font-bold mb-10" style="font-size:3.5rem; font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;">Sergei Blinov</div>
+  <div class="flex flex-col gap-3 text-lg">
+    <div><code>Senior Software Engineer at AckiNacki</code></div>
+    <div><code>Math enthusiast</code></div>
+    <div><code>Programming language polyglot</code></div>
+  </div>
+</div>
+
+</div>
 
 ---
 layout: two-cols
@@ -53,23 +115,34 @@ layout: two-cols
 # Why companies still ask LeetCode
 
 <div class="lead">
-Not because the job is "reverse a binary tree" every day, but because interviews still need a fast and somewhat standardized signal.
+Because obviously the best way to evaluate engineers is a <span class="accent">timed puzzle contest</span>.
 </div>
 
-- It tests structured problem solving under time pressure
-- It exposes how candidates model tradeoffs
-- It is easier to calibrate than open-ended system design for junior and mid-level roles
-- It creates a common language across teams and interviewers
+- 10 years of production experience? Sorry, you forgot the two-pointer trick 😂
+- It's not a good test — it's a *convenient* one
+- LLM solves LeetCode Hard from a screenshot faster than you can read it 😅
+- 40% of hiring managers don't trust it… but use it anyway 🤷
+
+<div class="pt-4 tiny text-[var(--text-muted)]">
+And yet… here we all are, grinding LeetCode at midnight 🌙
+</div>
 
 ::right::
 
-<div class="problem-card mt-8">
-  <div class="text-sm uppercase tracking-[0.2em] text-[var(--brand-accent)] font-semibold">Reality Check</div>
-  <div class="pt-3 text-lg">
-    LeetCode is <span class="accent">not the job</span>, but it is still part of the hiring pipeline.
+<div class="mt-4 ml-4 rounded-2xl overflow-hidden border border-[var(--border-subtle)] shadow-xl">
+  <div style="background:#2a5c3f; padding:12px 16px;">
+    <div class="text-xs uppercase tracking-[0.2em] font-bold" style="color:#6ee7a0;">The Interview</div>
+    <div class="pt-1 text-sm" style="color:#d1fae5;">
+      "Implement a red-black tree with <code>O(1)</code> amortized rotations."
+    </div>
+    <img src="/meme-mind-blown.gif" class="mt-2 rounded-lg w-full" style="max-height:140px; object-fit:cover;" />
   </div>
-  <div class="pt-4 tiny text-[var(--text-muted)]">
-    Especially when companies need a scalable, repeatable interview process.
+  <div style="background:#5c2a2a; padding:12px 16px;">
+    <div class="text-xs uppercase tracking-[0.2em] font-bold" style="color:#fca5a5;">The Job</div>
+    <div class="pt-1 text-sm" style="color:#fde8e8;">
+      "Move this button 2px to the left."
+    </div>
+    <img src="/meme-idiocracy.gif" class="mt-2 rounded-lg w-full" style="max-height:140px; object-fit:cover;" />
   </div>
 </div>
 
@@ -77,33 +150,52 @@ Not because the job is "reverse a binary tree" every day, but because interviews
 
 # Common interview topics
 
+<div class="mt-2">
+
+<div class="text-xs uppercase tracking-[0.2em] font-bold text-[var(--text-muted)] mb-2">Data Structures</div>
 <div class="chip-row">
-  <div class="chip">Arrays & Hashing</div>
-  <div class="chip">Two Pointers</div>
-  <div class="chip">Binary Search</div>
-  <div class="chip">Stacks & Queues</div>
-  <div class="chip">Trees & Graphs</div>
-  <div class="chip">Backtracking</div>
-  <div class="chip">Greedy</div>
-  <div class="chip">Heap / Priority Queue</div>
+  <div class="chip border-green-400 text-green-400">Arrays & Hashing</div>
+  <div class="chip border-green-400 text-green-400">Linked Lists</div>
+  <div class="chip border-green-400 text-green-400">Stacks & Queues</div>
+  <div class="chip border-amber-400 text-amber-400">Trees & Tries</div>
+  <div class="chip border-amber-400 text-amber-400">Heap / Priority Queue</div>
+  <div class="chip border-amber-400 text-amber-400">Monotonic Stack</div>
+  <div class="chip border-red-400 text-red-400">Segment Tree</div>
+  <div class="chip border-red-400 text-red-400">Fenwick Tree</div>
+</div>
+
+<div class="text-xs uppercase tracking-[0.2em] font-bold text-[var(--text-muted)] mt-4 mb-2">Techniques & Patterns</div>
+<div class="chip-row">
+  <div class="chip border-green-400 text-green-400">Two Pointers</div>
+  <div class="chip border-green-400 text-green-400">Prefix Sum</div>
+  <div class="chip border-green-400 text-green-400">Binary Search</div>
+  <div class="chip border-amber-400 text-amber-400">Sliding Window</div>
+  <div class="chip border-amber-400 text-amber-400">Bit Manipulation</div>
+  <div class="chip border-amber-400 text-amber-400">Union-Find</div>
+  <div class="chip border-amber-400 text-amber-400">String Matching (KMP)</div>
+  <div class="chip border-red-400 text-red-400">Coordinate Compression</div>
+</div>
+
+<div class="text-xs uppercase tracking-[0.2em] font-bold text-[var(--text-muted)] mt-4 mb-2">Algorithms</div>
+<div class="chip-row">
+  <div class="chip border-green-400 text-green-400">Sorting</div>
+  <div class="chip border-amber-400 text-amber-400">BFS / DFS</div>
+  <div class="chip border-amber-400 text-amber-400">Backtracking</div>
+  <div class="chip border-amber-400 text-amber-400">Greedy</div>
+  <div class="chip border-amber-400 text-amber-400">Topological Sort</div>
+  <div class="chip border-amber-400 text-amber-400">Shortest Path</div>
+  <div class="chip border-red-400 text-red-400">Divide & Conquer</div>
+  <div class="chip border-red-400 text-red-400">Game Theory</div>
   <div class="chip font-bold border-[var(--go-blue)] text-[var(--brand-accent)]">Dynamic Programming</div>
 </div>
 
-<div class="pt-10 lead">
-Dynamic programming tends to be the turning point because it forces you to define:
 </div>
 
-- what the subproblem is
-- what information must be remembered
-- how a local choice affects the future
-
----
-layout: section
----
-
-# 3 DP Problems
-
-From a linear recurrence to a high-dimensional state space
+<div class="mt-4 flex gap-6 text-xs text-[var(--text-muted)]">
+  <span class="text-green-400">●</span> <span>Easy</span>
+  <span class="text-amber-400">●</span> <span>Medium</span>
+  <span class="text-red-400">●</span> <span>Hard</span>
+</div>
 
 ---
 layout: two-cols
