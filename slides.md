@@ -119,7 +119,7 @@ Because obviously the best way to evaluate engineers is a <span class="accent">t
 </div>
 
 - 10 years of production experience? Sorry, you forgot the two-pointer trick 😂
-- It's not a good test — it's a *convenient* one
+- It's not a good test — it's a _convenient_ one
 - LLM solves LeetCode Hard from a screenshot faster than you can read it 😅
 - 40% of hiring managers don't trust it… but use it anyway 🤷
 
@@ -203,30 +203,242 @@ layout: two-cols
 
 # Why is it called dynamic programming?
 
-<div class="lead">
-The name is historical, not descriptive.
-It does <span class="accent">not</span> mean "programming" as in writing code, and it does <span class="accent">not</span> mean "dynamic" as in changing over time.
-</div>
+- The name is historical, not descriptive
+- It does <span class="accent">not</span> mean "programming" as in writing code
+- It does <span class="accent">not</span> mean "dynamic" as in changing over time.
 
-- Richard Bellman popularized the term in the context of optimization
-- In practice, DP means:
-  solving a problem by combining answers to overlapping subproblems
-- The real work is choosing the right state and recurrence
+<span class="accent">Richard Bellman</span> coined the term in the 1950s while working at RAND Corporation
+
+- "Programming" here means <span class="accent">planning</span> (as in "linear programming")
+- He deliberately chose a vague, impressive name to shield his research from politicians who were hostile to mathematics 🤷
 
 ::right::
 
-<div class="problem-card mt-4">
-  <div class="text-sm uppercase tracking-[0.2em] text-[var(--brand-accent)] font-semibold">Often Confused With</div>
-  <div class="pt-3">
-    <div><span class="accent">Recursion</span>: a way to express a solution</div>
-    <div class="pt-2"><span class="accent">Memoization</span>: a tool that often implements DP</div>
-    <div class="pt-2"><span class="accent">Greedy</span>: making the best local choice, which often fails for DP problems</div>
-    <div class="pt-2"><span class="accent">Backtracking</span>: exploring choices, usually without reusing computed results</div>
+<div class="flex flex-col items-center mt-4 ml-8">
+  <img src="/bellman.jpg" alt="Richard Bellman" class="rounded-xl shadow-xl" style="width:350px;" />
+  <div class="mt-3 text-sm text-[var(--text-muted)]">Richard Bellman (1920–1984)</div>
+</div>
+
+---
+layout: two-cols
+---
+
+<div class="mt-2">
+
+<div class="text-xs uppercase tracking-[0.2em] font-bold text-red-400 mb-4">Pure recursion — recomputes everything</div>
+
+```mermaid {scale: 0.7}
+graph TD
+  A["f(4)"] --> B["f(3)"]
+  A --> C["f(2)"]
+  B --> D["f(2)"]
+  B --> E["f(1)"]
+  D --> F["f(1)"]
+  D --> G["f(0)"]
+  C --> H["f(1)"]
+  C --> I["f(0)"]
+  style D fill:#5c2a2a,stroke:#fca5a5,color:#fca5a5
+  style C fill:#5c2a2a,stroke:#fca5a5,color:#fca5a5
+  style F fill:#5c2a2a,stroke:#fca5a5,color:#fca5a5
+  style H fill:#5c2a2a,stroke:#fca5a5,color:#fca5a5
+  style E fill:#5c2a2a,stroke:#fca5a5,color:#fca5a5
+```
+
+<div class="text-xs uppercase tracking-[0.2em] font-bold text-green-400 mb-4 mt-8">DP — each subproblem solved once</div>
+
+```mermaid {scale: 0.7}
+graph LR
+  A["f(0)"] --> B["f(1)"]
+  B --> C["f(2)"]
+  A --> C
+  C --> D["f(3)"]
+  B --> D
+  D --> E["f(4)"]
+  C --> E
+  style A fill:#2a5c3f,stroke:#6ee7a0,color:#6ee7a0
+  style B fill:#2a5c3f,stroke:#6ee7a0,color:#6ee7a0
+  style C fill:#2a5c3f,stroke:#6ee7a0,color:#6ee7a0
+  style D fill:#2a5c3f,stroke:#6ee7a0,color:#6ee7a0
+  style E fill:#2a5c3f,stroke:#6ee7a0,color:#6ee7a0
+```
+
+</div>
+
+::right::
+
+# DP ≠ Recursion
+
+<div class="lead">
+Recursion is a <span class="accent">form</span>, DP is an <span class="accent">idea</span>.
+</div>
+
+- Recursion — just a function calling itself
+- It does not imply reusing results
+- DP can be top-down (recursive) or bottom-up (iterative)
+- Not all recursive solutions are DP, and not all DP needs recursion
+
+---
+layout: two-cols
+---
+
+<div class="rounded-2xl overflow-hidden border border-[var(--border-subtle)] shadow-xl mr-4">
+  <div style="background:#2a5c3f; padding:14px 18px;">
+    <div class="text-xs uppercase tracking-[0.2em] font-bold" style="color:#6ee7a0;">Memoization</div>
+    <div class="pt-2" style="color:#d1fae5;">
+
+```go
+var memo = map[int]int{}
+func fib(n int) int {
+    if v, ok := memo[n]; ok {
+        return v
+    }
+    memo[n] = fib(n-1) + fib(n-2)
+    return memo[n]
+}
+```
+
+  </div>
+    <div class="text-xs mt-1" style="color:#6ee7a0;">✓ Also DP — optimal substructure + overlapping subproblems</div>
+  </div>
+  <div style="background:#5c4a2a; padding:14px 18px;">
+    <div class="text-xs uppercase tracking-[0.2em] font-bold" style="color:#fbbf24;">Also "memoization"</div>
+    <div class="pt-2" style="color:#fef3c7;">
+
+```go
+var cache = map[int]*User{}
+func getUser(id int) *User {
+    if u, ok := cache[id]; ok {
+        return u
+    }
+    cache[id] = db.Query(id)
+    return cache[id]
+}
+```
+
+  </div>
+    <div class="text-xs mt-1" style="color:#fbbf24;">✗ Not DP — just caching, no subproblem structure</div>
   </div>
 </div>
 
-<div class="pt-6 tiny text-[var(--text-muted)]">
-DP is usually about structured reuse of computed states.
+::right::
+
+# DP ≠ Memoization
+
+<div class="lead">
+Memoization is a <span class="accent">technique</span> that often implements DP, but not every cache is DP.
+</div>
+
+- Memoization = caching results of pure functions
+- It is the standard way to implement top-down DP
+- But caching an HTTP response is memoization too — not DP
+- DP requires two properties:
+  - <span class="accent">Optimal substructure</span>
+  - <span class="accent">Overlapping subproblems</span>
+
+---
+layout: two-cols
+---
+
+<div class="problem-card mt-8 mr-4">
+  <div class="text-sm uppercase tracking-[0.2em] text-[var(--brand-accent)] font-semibold">When Greedy Breaks</div>
+  <div class="pt-3 text-sm">
+
+Coins = `{1, 3, 4}`, target = `6`
+
+🟥 Greedy: `4 + 1 + 1` = 3 coins
+
+🟩 DP: `3 + 3` = 2 coins
+
+  </div>
+  <div class="pt-4 tiny text-[var(--text-muted)]">
+    Greedy never reconsiders. DP systematically evaluates all subproblems.
+  </div>
+</div>
+
+вот сюда гифку с сабвэй сёрфера вставить где монеты собирают
+
+::right::
+
+# DP ≠ Greedy
+
+<div class="lead">
+Greedy makes the <span class="accent">locally best</span> choice and never looks back. DP considers <span class="accent">all options</span> via subproblems.
+</div>
+
+- Greedy works when local optimum guarantees global optimum
+- DP works when you must explore multiple paths and combine results
+- Classic example: **Coin Change**
+  - Greedy works for `{1, 5, 10, 25}` — always pick the biggest coin
+  - Greedy fails for `{1, 3, 4}`, target `6`: greedy gives `4+1+1`, DP gives `3+3`
+
+---
+layout: two-cols
+---
+
+::right::
+
+# DP ≠ Backtracking
+
+<div class="lead">
+Backtracking explores a <span class="accent">decision tree</span> exhaustively. DP <span class="accent">reuses</span> computed results across branches.
+</div>
+
+- Backtracking: try a choice → recurse → undo if it fails
+- It's brute force with pruning
+- DP also explores choices, but stores and reuses subproblem results
+- Add memoization to backtracking → you essentially get DP
+
+::left::
+
+<div class="problem-card mt-8 mr-4">
+  <div class="text-sm uppercase tracking-[0.2em] text-[var(--brand-accent)] font-semibold">The Spectrum</div>
+  <div class="pt-3 text-sm">
+
+**Brute force** — try everything: $O(2^n)$
+
+**Backtracking** — try everything, prune early: still exponential
+
+**DP** — try everything, but cache overlapping work: polynomial
+
+  </div>
+  <div class="pt-4 tiny text-[var(--text-muted)]">
+    If your backtracking solution revisits the same state — it's begging to become DP.
+  </div>
+</div>
+
+---
+layout: two-cols
+---
+
+::right::
+
+# DP ≠ Combinatorial Formulas
+
+<div class="lead">
+Catalan numbers, binomial coefficients, Fibonacci — they can be computed via <span class="accent">closed-form formulas</span> or via <span class="accent">DP recurrence</span>.
+</div>
+
+- Closed-form: $C_n = \frac{1}{n+1}\binom{2n}{n}$ — fast, but you need to know the formula
+- DP recurrence: $C_n = \sum_{i=0}^{n-1} C_i \cdot C_{n-1-i}$ — universal, works when no formula exists
+- We use DP when:
+  - The problem has recursive structure
+  - No closed-form exists or it's impractical
+
+::left::
+
+<div class="problem-card mt-8 mr-4">
+  <div class="text-sm uppercase tracking-[0.2em] text-[var(--brand-accent)] font-semibold">Catalan Numbers in the Wild</div>
+</div>
+
+All of these count $C_n$:
+
+- Number of valid parentheses sequences
+- Number of distinct BSTs with $n$ nodes
+- Number of ways to triangulate a polygon
+- Number of monotonic lattice paths
+
+<div class="pt-1 tiny text-[var(--text-muted)]">
+Same formula, but in real problems you arrive at it through DP thinking — defining subproblems, not memorizing formulas.
 </div>
 
 ---
