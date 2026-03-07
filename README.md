@@ -1,15 +1,23 @@
 # presentation-golang-leetcode
 
-To install dependencies:
+Slidev presentation about interview-style dynamic programming problems, with all solution slides written in Go.
+
+## Setup
 
 ```bash
 bun install
 ```
 
-To run:
+## Run the deck
 
 ```bash
-bun run index.ts
+bun run dev
 ```
 
-This project was created using `bun init` in bun v1.3.10. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+## Build
+
+```bash
+bun run build
+```
+
+Main deck file: `slides.md`

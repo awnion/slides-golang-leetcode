@@ -1,6 +1,10 @@
 # dependencies (bun install)
 node_modules
 
+# agents
+.claude
+.agents
+
 # output
 out
 dist
