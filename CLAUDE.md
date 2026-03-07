@@ -1,3 +1,4 @@
-- Default to using Bun instead of Node.js.
-- `bun run dev`
-- use skill slidev
+- Use Bun instead of Node.js (`bun run dev`, `bunx` instead of `npx`)
+- Use `uv` / `uvx` for Python
+- Use `rg` instead of `grep`, `fd` instead of `find`
+- Use skill `slidev` (if the skill doesn't load, notify the user)

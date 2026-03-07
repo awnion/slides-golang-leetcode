@@ -1,0 +1,119 @@
+:root {
+    --slidev-theme-primary: #00add8;
+    --go-blue: #00add8;
+    --go-light-blue: #5dc9e2;
+    --go-aqua: #00a29c;
+    --go-fuchsia: #ce3262;
+    --go-yellow: #fddd00;
+    --brand-accent: #00add8;
+    --brand-accent2: #ce3262;
+    --bg-base: #f8fafc;
+    --bg-card: rgba(255, 255, 255, 0.85);
+    --bg-card-grad-1: rgba(0, 173, 216, 0.38);
+    --bg-card-grad-2: rgba(206, 50, 98, 0.18);
+    --border-subtle: rgba(0, 173, 216, 0.15);
+    --text-primary: #1a1a2e;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+}
+
+html.dark {
+    --brand-accent: #5dc9e2;
+    --brand-accent2: #f472b6;
+    --bg-base: #0f172a;
+    --bg-card: rgba(30, 41, 59, 0.85);
+    --bg-card-grad-1: rgba(0, 173, 216, 0.25);
+    --bg-card-grad-2: rgba(206, 50, 98, 0.12);
+    --border-subtle: rgba(93, 201, 226, 0.2);
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #94a3b8;
+}
+
+.slidev-layout {
+    background:
+        radial-gradient(circle at top right, var(--bg-card-grad-1), transparent 28%),
+        radial-gradient(circle at bottom left, var(--bg-card-grad-2), transparent 24%),
+        var(--bg-base);
+    color: var(--text-primary);
+}
+
+h1, h2, h3, h4 {
+    color: var(--text-primary) !important;
+}
+
+li {
+    color: var(--text-secondary);
+}
+
+code, pre, kbd, samp, .font-mono, .shiki {
+    font-family: afio, monospace;
+    font-weight: 600;
+}
+
+:not(pre) > code {
+    background: rgba(0, 162, 156, 0.1);
+    color: #0e4f4c;
+    padding: 0.15em 0.35em;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+html.dark :not(pre) > code {
+    background: rgba(93, 201, 226, 0.15);
+    color: #a5f3fc;
+}
+
+.slidev-layout pre {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 162, 156, 0.15);
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+}
+
+html.dark .slidev-layout pre {
+    background: #1e293b !important;
+    border: 1px solid rgba(93, 201, 226, 0.2);
+}
+
+h1, h2, h3 {
+    letter-spacing: -0.02em;
+}
+
+.lead {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.accent {
+    color: var(--brand-accent);
+    font-weight: 700;
+}
+
+.chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
+.chip {
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    border-radius: 999px;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.95rem;
+}
+
+.problem-card {
+    border: 1px solid var(--border-subtle);
+    border-radius: 1rem;
+    padding: 1rem 1.1rem;
+    background: var(--bg-card);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.tiny {
+    font-size: 0.92rem;
+}
