@@ -507,31 +507,137 @@ $C_5 = \frac{1}{6}\binom{10}{5} = 42$
 </svg>
 
 ---
+layout: center
+---
 
-# Problem 1: House Robber
-
-<div class="lead">
-Easy to explain, easy to brute force, but already useful for introducing the core DP habit:
-<span class="accent">at index i, what is the best answer so far?</span>
+<div class="text-center">
+  <div class="text-6xl mb-8">🐧</div>
+  <div class="text-4xl font-bold italic">"Talk is cheap.</div>
+  <div class="text-4xl font-bold italic mb-6">Show me the <span class="text-[var(--brand-accent)]">code</span>."</div>
+  <div class="text-lg text-gray-500">— Linus Torvalds</div>
 </div>
-
-<div class="problem-card mt-6">
-Given an integer array `nums`, return the maximum amount of money you can rob tonight without robbing two adjacent houses.
-</div>
-
-- Brute force asks: rob this house or skip it?
-- DP asks: what is the best total ending at position `i`?
-- This is a classic 1D recurrence
 
 ---
 
-# House Robber: state and transition
+# Problem 1: House Robber
+
+<div class="problem-card mt-6">
+
+🏠 A robber has a list of houses, each with a known amount of money.
+
+He can't rob two adjacent houses in a row. Find the maximum amount he can steal. 💰
+
+</div>
+
+<svg viewBox="0 0 680 230" class="mt-2 w-full" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .h { width: 52px; height: 52px; rx: 4; }
+    .rob { fill: #0d9488; fill-opacity: 0.3; stroke: #2dd4bf; stroke-width: 1.5; }
+    .skip { fill: #1e293b; stroke: #334155; stroke-width: 1; }
+    .hnum { font-family: monospace; font-size: 16px; text-anchor: middle; dominant-baseline: central; }
+    .hnum-rob { fill: #2dd4bf; font-weight: bold; }
+    .hnum-skip { fill: #64748b; }
+    .dp { font-family: monospace; font-size: 13px; text-anchor: middle; dominant-baseline: central; fill: #94a3b8; }
+    .lbl { font-family: sans-serif; font-size: 11px; fill: #64748b; text-anchor: end; dominant-baseline: central; }
+    .idx { font-family: monospace; font-size: 10px; fill: #475569; text-anchor: middle; }
+    .roof { stroke-width: 1.5; fill: none; }
+    .roof-rob { stroke: #2dd4bf; }
+    .roof-skip { stroke: #334155; }
+    .ans { font-family: monospace; font-size: 14px; fill: #2dd4bf; font-weight: bold; }
+    .ex-lbl { font-family: sans-serif; font-size: 12px; fill: #94a3b8; font-weight: bold; }
+  </style>
+  <!-- indices -->
+  <text x="48" y="12" class="idx">0</text>
+  <text x="112" y="12" class="idx">1</text>
+  <text x="176" y="12" class="idx">2</text>
+  <text x="240" y="12" class="idx">3</text>
+  <text x="304" y="12" class="idx">4</text>
+  <text x="368" y="12" class="idx">5</text>
+  <text x="432" y="12" class="idx">6</text>
+  <text x="496" y="12" class="idx">7</text>
+  <text x="560" y="12" class="idx">8</text>
+  <text x="624" y="12" class="idx">9</text>
+  <!-- roofs -->
+  <path d="M28,22 L48,14 L68,22" class="roof roof-rob"/>
+  <path d="M92,22 L112,14 L132,22" class="roof roof-skip"/>
+  <path d="M156,22 L176,14 L196,22" class="roof roof-rob"/>
+  <path d="M220,22 L240,14 L260,22" class="roof roof-skip"/>
+  <path d="M284,22 L304,14 L324,22" class="roof roof-rob"/>
+  <path d="M348,22 L368,14 L388,22" class="roof roof-skip"/>
+  <path d="M412,22 L432,14 L452,22" class="roof roof-rob"/>
+  <path d="M476,22 L496,14 L516,22" class="roof roof-skip"/>
+  <path d="M540,22 L560,14 L580,22" class="roof roof-skip"/>
+  <path d="M604,22 L624,14 L644,22" class="roof roof-rob"/>
+  <!-- houses: nums = [2, 7, 9, 3, 1, 5, 8, 2, 4, 6] -->
+  <!-- robbed: 0,2,4,6,9 = 2+9+1+8+6 = 26 -->
+  <rect x="22" y="22" class="h rob"/>
+  <text x="48" y="48" class="hnum hnum-rob">2</text>
+  <rect x="86" y="22" class="h skip"/>
+  <text x="112" y="48" class="hnum hnum-skip">7</text>
+  <rect x="150" y="22" class="h rob"/>
+  <text x="176" y="48" class="hnum hnum-rob">9</text>
+  <rect x="214" y="22" class="h skip"/>
+  <text x="240" y="48" class="hnum hnum-skip">3</text>
+  <rect x="278" y="22" class="h rob"/>
+  <text x="304" y="48" class="hnum hnum-rob">1</text>
+  <rect x="342" y="22" class="h skip"/>
+  <text x="368" y="48" class="hnum hnum-skip">5</text>
+  <rect x="406" y="22" class="h rob"/>
+  <text x="432" y="48" class="hnum hnum-rob">8</text>
+  <rect x="470" y="22" class="h skip"/>
+  <text x="496" y="48" class="hnum hnum-skip">2</text>
+  <rect x="534" y="22" class="h skip"/>
+  <text x="560" y="48" class="hnum hnum-skip">4</text>
+  <rect x="598" y="22" class="h rob"/>
+  <text x="624" y="48" class="hnum hnum-rob">6</text>
+  <!-- answer -->
+  <text x="48" y="95" class="ans"><tspan class="ex-lbl">Example 1: </tspan>2 + 9 + 1 + 8 + 6 = 26</text>
+  <!-- example 2: nums = [10,1,1,10,1,1,10,1,1,10], rob 0,3,6,9 = 40 -->
+  <!-- roofs -->
+  <path d="M28,147 L48,139 L68,147" class="roof roof-rob"/>
+  <path d="M92,147 L112,139 L132,147" class="roof roof-skip"/>
+  <path d="M156,147 L176,139 L196,147" class="roof roof-skip"/>
+  <path d="M220,147 L240,139 L260,147" class="roof roof-rob"/>
+  <path d="M284,147 L304,139 L324,147" class="roof roof-skip"/>
+  <path d="M348,147 L368,139 L388,147" class="roof roof-skip"/>
+  <path d="M412,147 L432,139 L452,147" class="roof roof-rob"/>
+  <path d="M476,147 L496,139 L516,147" class="roof roof-skip"/>
+  <path d="M540,147 L560,139 L580,147" class="roof roof-skip"/>
+  <path d="M604,147 L624,139 L644,147" class="roof roof-rob"/>
+  <!-- houses -->
+  <rect x="22" y="147" class="h rob"/>
+  <text x="48" y="173" class="hnum hnum-rob">10</text>
+  <rect x="86" y="147" class="h skip"/>
+  <text x="112" y="173" class="hnum hnum-skip">1</text>
+  <rect x="150" y="147" class="h skip"/>
+  <text x="176" y="173" class="hnum hnum-skip">1</text>
+  <rect x="214" y="147" class="h rob"/>
+  <text x="240" y="173" class="hnum hnum-rob">10</text>
+  <rect x="278" y="147" class="h skip"/>
+  <text x="304" y="173" class="hnum hnum-skip">1</text>
+  <rect x="342" y="147" class="h skip"/>
+  <text x="368" y="173" class="hnum hnum-skip">1</text>
+  <rect x="406" y="147" class="h rob"/>
+  <text x="432" y="173" class="hnum hnum-rob">10</text>
+  <rect x="470" y="147" class="h skip"/>
+  <text x="496" y="173" class="hnum hnum-skip">1</text>
+  <rect x="534" y="147" class="h skip"/>
+  <text x="560" y="173" class="hnum hnum-skip">1</text>
+  <rect x="598" y="147" class="h rob"/>
+  <text x="624" y="173" class="hnum hnum-rob">10</text>
+  <!-- answer 2 -->
+  <text x="48" y="220" class="ans"><tspan class="ex-lbl">Example 2: </tspan>10 + 10 + 10 + 10 = 40</text>
+</svg>
+
+---
+
+# Problem 1: House Robber: State And Transition
 
 `dp[i]` = best answer considering houses `0..i`
 
 Recurrence:
 
-```text
+```go
 dp[i] = max(
   dp[i - 1],           // skip house i
   dp[i - 2] + nums[i]  // rob house i
@@ -543,14 +649,9 @@ Base cases:
 - `dp[0] = nums[0]`
 - `dp[1] = max(nums[0], nums[1])`
 
-Optimization:
-
-- We only need the previous two states
-- Space goes from `O(n)` to `O(1)`
-
 ---
 
-# House Robber in Go
+# Problem 1: House Robber: Solution
 
 ```go
 func rob(nums []int) int {
@@ -558,8 +659,7 @@ func rob(nums []int) int {
 		return nums[0]
 	}
 
-	prev := nums[0]
-	cur := max(nums[0], nums[1])
+	prev, cur := nums[0], max(nums[0], nums[1])
 
 	for i := 2; i < len(nums); i++ {
 		prev, cur = cur, max(cur, prev+nums[i])
@@ -569,63 +669,264 @@ func rob(nums []int) int {
 }
 ```
 
+<style>
+.slidev-code {
+  font-size: 1.2em !important;
+  line-height: 1.5 !important;
+}
+</style>
+
 ---
 
 # Problem 2: Longest Increasing Subsequence
 
-<div class="lead">
-Now the state is still 1D, but the transition is no longer local.
-Each position may depend on <span class="accent">many previous positions</span>.
-</div>
-
 <div class="problem-card mt-6">
-Given an integer array `nums`, return the length of the longest strictly increasing subsequence.
+📈 Given an array of numbers, find the longest subsequence where each next element is strictly greater than the previous. Elements don't have to be adjacent. Return its length.
 </div>
 
-- This is a good "medium" DP problem
-- It teaches how to define "best answer ending at index i"
-- It also opens the door to discussing better-than-DP solutions later
+<svg viewBox="0 0 680 145" class="mt-4 w-full" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .lis-box { width: 52px; height: 52px; rx: 4; }
+    .lis-pick { fill: #0d9488; fill-opacity: 0.15; stroke: #2dd4bf; stroke-width: 1; stroke-dasharray: 4 2; }
+    .lis-skip { fill: #1e293b; stroke: #334155; stroke-width: 1; }
+    .lis-out { fill: #0d9488; fill-opacity: 0.3; stroke: #2dd4bf; stroke-width: 1.5; }
+    .lis-num { font-family: monospace; font-size: 16px; text-anchor: middle; dominant-baseline: central; }
+    .lis-num-pick { fill: #2dd4bf; fill-opacity: 0.4; }
+    .lis-num-skip { fill: #64748b; }
+    .lis-num-out { fill: #2dd4bf; font-weight: bold; }
+    .lis-idx { font-family: monospace; font-size: 10px; fill: #475569; text-anchor: middle; }
+    .lis-ans { font-family: monospace; font-size: 14px; fill: #2dd4bf; font-weight: bold; }
+    .lis-line { stroke: #2dd4bf; stroke-width: 1; stroke-dasharray: 3 3; opacity: 0.4; }
+    .lis-lbl { font-family: sans-serif; font-size: 11px; fill: #64748b; }
+  </style>
+  <!-- nums = [10, 9, 2, 5, 3, 7, 101, 18, 2] → LIS = [2, 3, 7, 18] = length 4 -->
+  <!-- indices -->
+  <text x="48" y="10" class="lis-idx">0</text>
+  <text x="112" y="10" class="lis-idx">1</text>
+  <text x="176" y="10" class="lis-idx">2</text>
+  <text x="240" y="10" class="lis-idx">3</text>
+  <text x="304" y="10" class="lis-idx">4</text>
+  <text x="368" y="10" class="lis-idx">5</text>
+  <text x="432" y="10" class="lis-idx">6</text>
+  <text x="496" y="10" class="lis-idx">7</text>
+  <text x="560" y="10" class="lis-idx">8</text>
+  <!-- top row: original array, picked slots shown as ghost -->
+  <rect x="22" y="16" class="lis-box lis-skip"/>
+  <text x="48" y="42" class="lis-num lis-num-skip">10</text>
+  <rect x="86" y="16" class="lis-box lis-skip"/>
+  <text x="112" y="42" class="lis-num lis-num-skip">9</text>
+  <rect x="150" y="16" class="lis-box lis-pick"/>
+  <text x="176" y="42" class="lis-num lis-num-pick">2</text>
+  <rect x="214" y="16" class="lis-box lis-skip"/>
+  <text x="240" y="42" class="lis-num lis-num-skip">5</text>
+  <rect x="278" y="16" class="lis-box lis-pick"/>
+  <text x="304" y="42" class="lis-num lis-num-pick">3</text>
+  <rect x="342" y="16" class="lis-box lis-pick"/>
+  <text x="368" y="42" class="lis-num lis-num-pick">7</text>
+  <rect x="406" y="16" class="lis-box lis-skip"/>
+  <text x="432" y="42" class="lis-num lis-num-skip">101</text>
+  <rect x="470" y="16" class="lis-box lis-pick"/>
+  <text x="496" y="42" class="lis-num lis-num-pick">18</text>
+  <rect x="534" y="16" class="lis-box lis-skip"/>
+  <text x="560" y="42" class="lis-num lis-num-skip">2</text>
+  <!-- dashed lines from ghost slots to extracted row -->
+  <line x1="176" y1="68" x2="112" y2="86" class="lis-line"/>
+  <line x1="304" y1="68" x2="176" y2="86" class="lis-line"/>
+  <line x1="368" y1="68" x2="240" y2="86" class="lis-line"/>
+  <line x1="496" y1="68" x2="304" y2="86" class="lis-line"/>
+  <!-- bottom row: extracted LIS -->
+  <text x="48" y="115" class="lis-lbl">LIS →</text>
+  <rect x="86" y="86" class="lis-box lis-out"/>
+  <text x="112" y="112" class="lis-num lis-num-out">2</text>
+  <rect x="150" y="86" class="lis-box lis-out"/>
+  <text x="176" y="112" class="lis-num lis-num-out">3</text>
+  <rect x="214" y="86" class="lis-box lis-out"/>
+  <text x="240" y="112" class="lis-num lis-num-out">7</text>
+  <rect x="278" y="86" class="lis-box lis-out"/>
+  <text x="304" y="112" class="lis-num lis-num-out">18</text>
+  <!-- answer -->
+  <text x="348" y="115" class="lis-ans">— length 4</text>
+</svg>
 
 ---
 
-# LIS: state and transition
+<svg viewBox="0 0 680 380" class="w-full mx-auto" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .lv-box { width: 52px; height: 52px; rx: 4; }
+    .lv-default { fill: #1e293b; stroke: #334155; stroke-width: 1; }
+    .lv-active { fill: #0d9488; fill-opacity: 0.3; stroke: #2dd4bf; stroke-width: 1.5; }
+    .lv-ghost { fill: #1e3a5f; fill-opacity: 0.15; stroke: #38bdf8; stroke-width: 1; stroke-dasharray: 4 2; }
+    .lv-pulled { fill: #1e3a5f; fill-opacity: 0.4; stroke: #38bdf8; stroke-width: 1.5; }
+    .lv-num { font-family: monospace; font-size: 16px; text-anchor: middle; dominant-baseline: central; }
+    .lv-num-def { fill: #94a3b8; }
+    .lv-num-act { fill: #2dd4bf; font-weight: bold; }
+    .lv-num-ghost { fill: #38bdf8; opacity: 0.4; }
+    .lv-num-pulled { fill: #38bdf8; font-weight: bold; }
+    .lv-idx { font-family: monospace; font-size: 10px; fill: #475569; text-anchor: middle; }
+    .lv-dp { font-family: monospace; font-size: 14px; text-anchor: middle; dominant-baseline: central; }
+    .lv-dp-val { fill: #f59e0b; font-weight: bold; }
+    .lv-dp-dim { fill: #64748b; }
+    .lv-lbl { font-family: sans-serif; font-size: 11px; fill: #64748b; }
+    .lv-line { stroke: #38bdf8; stroke-width: 1; stroke-dasharray: 3 3; opacity: 0.3; }
+    .lv-note { font-family: sans-serif; font-size: 13px; fill: #94a3b8; }
+    .lv-accent { fill: #2dd4bf; font-weight: bold; }
+  </style>
+  <!-- nums = [10, 9, 2, 5, 3, 7, 101, 18, 2] -->
+  <!-- dp   = [ 1, 1, 1, 2, 2, 3,   4,  4, 1] -->
+  <!-- Computing dp[5]: sources are j=2(2), j=3(5), j=4(3) — all < 7 -->
+  <!-- indices -->
+  <text x="48" y="10" class="lv-idx">0</text>
+  <text x="112" y="10" class="lv-idx">1</text>
+  <text x="176" y="10" class="lv-idx">2</text>
+  <text x="240" y="10" class="lv-idx">3</text>
+  <text x="304" y="10" class="lv-idx">4</text>
+  <text x="368" y="10" class="lv-idx">5</text>
+  <text x="432" y="10" class="lv-idx">6</text>
+  <text x="496" y="10" class="lv-idx">7</text>
+  <text x="560" y="10" class="lv-idx">8</text>
+  <!-- top row: array with ghost slots for sources -->
+  <rect x="22" y="16" class="lv-box lv-default"/>
+  <text x="48" y="42" class="lv-num lv-num-def">10</text>
+  <rect x="86" y="16" class="lv-box lv-default"/>
+  <text x="112" y="42" class="lv-num lv-num-def">9</text>
+  <rect x="150" y="16" class="lv-box lv-ghost"/>
+  <text x="176" y="42" class="lv-num lv-num-ghost">2</text>
+  <rect x="214" y="16" class="lv-box lv-ghost"/>
+  <text x="240" y="42" class="lv-num lv-num-ghost">5</text>
+  <rect x="278" y="16" class="lv-box lv-ghost"/>
+  <text x="304" y="42" class="lv-num lv-num-ghost">3</text>
+  <rect x="342" y="16" class="lv-box lv-active"/>
+  <text x="368" y="42" class="lv-num lv-num-act">7</text>
+  <rect x="406" y="16" class="lv-box lv-default"/>
+  <text x="432" y="42" class="lv-num lv-num-def">101</text>
+  <rect x="470" y="16" class="lv-box lv-default"/>
+  <text x="496" y="42" class="lv-num lv-num-def">18</text>
+  <rect x="534" y="16" class="lv-box lv-default"/>
+  <text x="560" y="42" class="lv-num lv-num-def">2</text>
+  <!-- dashed lines straight down from ghosts to pulled-out cards -->
+  <line x1="176" y1="68" x2="176" y2="86" class="lv-line"/>
+  <line x1="240" y1="68" x2="240" y2="86" class="lv-line"/>
+  <line x1="304" y1="68" x2="304" y2="86" class="lv-line"/>
+  <!-- labels under non-pulled cards: >= 7 -->
+  <text x="48" y="82" class="lv-dp lv-dp-dim">≥ 7</text>
+  <text x="112" y="82" class="lv-dp lv-dp-dim">≥ 7</text>
+  <!-- pulled-out row: candidates < 7, directly below their original positions -->
+  <rect x="150" y="86" class="lv-box lv-pulled"/>
+  <text x="176" y="112" class="lv-num lv-num-pulled">2</text>
+  <text x="176" y="130" class="lv-dp lv-dp-dim">dp=1</text>
+  <rect x="214" y="86" class="lv-box lv-pulled"/>
+  <text x="240" y="112" class="lv-num lv-num-pulled">5</text>
+  <text x="240" y="130" class="lv-dp lv-dp-val">dp=2</text>
+  <rect x="278" y="86" class="lv-box lv-pulled"/>
+  <text x="304" y="112" class="lv-num lv-num-pulled">3</text>
+  <text x="304" y="130" class="lv-dp lv-dp-val">dp=2</text>
+  <!-- explanation -->
+  <text x="48" y="160" class="lv-note">Best predecessor: <tspan class="lv-dp-val">max(1, 2, 2)</tspan> = 2</text>
+  <text x="48" y="180" class="lv-note"><tspan class="lv-accent">dp[5]</tspan> = 2 + 1 = <tspan class="lv-accent">3</tspan></text>
+
+  <!-- ═══ Step 2: Computing dp[6], value 101 ═══ -->
+  <!-- All previous elements < 101, so all are sources -->
+  <!-- indices -->
+
+<text x="48" y="210" class="lv-idx">0</text>
+<text x="112" y="210" class="lv-idx">1</text>
+<text x="176" y="210" class="lv-idx">2</text>
+<text x="240" y="210" class="lv-idx">3</text>
+<text x="304" y="210" class="lv-idx">4</text>
+<text x="368" y="210" class="lv-idx">5</text>
+<text x="432" y="210" class="lv-idx">6</text>
+<text x="496" y="210" class="lv-idx">7</text>
+<text x="560" y="210" class="lv-idx">8</text>
+
+  <!-- array with ALL previous as ghosts (all < 101) -->
+  <rect x="22" y="216" class="lv-box lv-ghost"/>
+  <text x="48" y="242" class="lv-num lv-num-ghost">10</text>
+  <rect x="86" y="216" class="lv-box lv-ghost"/>
+  <text x="112" y="242" class="lv-num lv-num-ghost">9</text>
+  <rect x="150" y="216" class="lv-box lv-ghost"/>
+  <text x="176" y="242" class="lv-num lv-num-ghost">2</text>
+  <rect x="214" y="216" class="lv-box lv-ghost"/>
+  <text x="240" y="242" class="lv-num lv-num-ghost">5</text>
+  <rect x="278" y="216" class="lv-box lv-ghost"/>
+  <text x="304" y="242" class="lv-num lv-num-ghost">3</text>
+  <rect x="342" y="216" class="lv-box lv-ghost"/>
+  <text x="368" y="242" class="lv-num lv-num-ghost">7</text>
+  <rect x="406" y="216" class="lv-box lv-active"/>
+  <text x="432" y="242" class="lv-num lv-num-act">101</text>
+  <rect x="470" y="216" class="lv-box lv-default"/>
+  <text x="496" y="242" class="lv-num lv-num-def">18</text>
+  <rect x="534" y="216" class="lv-box lv-default"/>
+  <text x="560" y="242" class="lv-num lv-num-def">2</text>
+  <!-- dashed lines from ghosts to pulled-out cards -->
+  <line x1="48" y1="268" x2="48" y2="286" class="lv-line"/>
+  <line x1="112" y1="268" x2="112" y2="286" class="lv-line"/>
+  <line x1="176" y1="268" x2="176" y2="286" class="lv-line"/>
+  <line x1="240" y1="268" x2="240" y2="286" class="lv-line"/>
+  <line x1="304" y1="268" x2="304" y2="286" class="lv-line"/>
+  <line x1="368" y1="268" x2="368" y2="286" class="lv-line"/>
+  <!-- pulled-out row: all candidates < 101 -->
+  <rect x="22" y="286" class="lv-box lv-pulled"/>
+  <text x="48" y="312" class="lv-num lv-num-pulled">10</text>
+  <text x="48" y="330" class="lv-dp lv-dp-dim">dp=1</text>
+  <rect x="86" y="286" class="lv-box lv-pulled"/>
+  <text x="112" y="312" class="lv-num lv-num-pulled">9</text>
+  <text x="112" y="330" class="lv-dp lv-dp-dim">dp=1</text>
+  <rect x="150" y="286" class="lv-box lv-pulled"/>
+  <text x="176" y="312" class="lv-num lv-num-pulled">2</text>
+  <text x="176" y="330" class="lv-dp lv-dp-dim">dp=1</text>
+  <rect x="214" y="286" class="lv-box lv-pulled"/>
+  <text x="240" y="312" class="lv-num lv-num-pulled">5</text>
+  <text x="240" y="330" class="lv-dp lv-dp-dim">dp=2</text>
+  <rect x="278" y="286" class="lv-box lv-pulled"/>
+  <text x="304" y="312" class="lv-num lv-num-pulled">3</text>
+  <text x="304" y="330" class="lv-dp lv-dp-dim">dp=2</text>
+  <rect x="342" y="286" class="lv-box lv-pulled"/>
+  <text x="368" y="312" class="lv-num lv-num-pulled">7</text>
+  <text x="368" y="330" class="lv-dp lv-dp-val">dp=3</text>
+  <!-- explanation -->
+  <text x="48" y="358" class="lv-note">Best predecessor: <tspan class="lv-dp-val">max(1, 1, 1, 2, 2, 3)</tspan> = 3</text>
+  <text x="48" y="376" class="lv-note"><tspan class="lv-accent">dp[6]</tspan> = 3 + 1 = <tspan class="lv-accent">4</tspan></text>
+</svg>
+
+---
+
+# Problem 2: State And Transition
 
 `dp[i]` = length of the longest increasing subsequence that ends at `i`
 
-Transition:
+## Transition:
 
-```text
+```go
 dp[i] = 1 + max(dp[j]) for all j < i where nums[j] < nums[i]
 ```
 
 If there is no such `j`, then:
 
-```text
+```go
 dp[i] = 1
 ```
 
-Key idea:
+## Key idea
 
 - We are not asking for the best subsequence anywhere
 - We are asking for the best subsequence that must end at a specific position
 
 Final answer:
 
-```text
+```go
 max(dp[i]) for all i
 ```
 
 ---
 
-# Longest Increasing Subsequence in Go
+# Problem 2: Solution
 
 ```go
 func lengthOfLIS(nums []int) int {
-	n := len(nums)
-	dp := make([]int, n)
+	dp := make([]int, len(nums))
 	best := 1
 
-	for i := 0; i < n; i++ {
+	for i := range nums {
 		dp[i] = 1
 		for j := 0; j < i; j++ {
 			if nums[j] < nums[i] {
@@ -638,6 +939,14 @@ func lengthOfLIS(nums []int) int {
 	return best
 }
 ```
+
+<style>
+.slidev-code {
+  font-size: 1em !important;
+  line-height: 1.5 !important;
+}
+
+</style>
 
 ---
 
