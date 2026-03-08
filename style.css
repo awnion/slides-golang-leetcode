@@ -72,7 +72,7 @@ html.dark :not(pre) > code {
 }
 
 html.dark .slidev-layout pre {
-    background: #1e293b !important;
+    background: #0b1120 !important;
     border: 1px solid rgba(93, 201, 226, 0.2);
 }
 

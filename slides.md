@@ -894,7 +894,11 @@ func rob(nums []int) int {
 
 `dp[i]` = length of the longest increasing subsequence that ends at `i`
 
-## Transition:
+## Key idea
+
+- We are asking for the best subsequence that must end at a specific position
+
+## Transition
 
 ```go
 dp[i] = 1 + max(dp[j]) for all j < i where nums[j] < nums[i]
@@ -906,15 +910,10 @@ If there is no such `j`, then:
 dp[i] = 1
 ```
 
-## Key idea
-
-- We are not asking for the best subsequence anywhere
-- We are asking for the best subsequence that must end at a specific position
-
-Final answer:
+## Final answer
 
 ```go
-max(dp[i]) for all i
+return max(dp[i]) for all i
 ```
 
 ---
@@ -922,7 +921,7 @@ max(dp[i]) for all i
 # Problem 2: Solution
 
 ```go
-func lengthOfLIS(nums []int) int {
+func longestIncreasingSubsequence(nums []int) int {
 	dp := make([]int, len(nums))
 	best := 1
 
