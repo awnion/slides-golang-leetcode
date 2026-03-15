@@ -414,27 +414,28 @@ layout: two-cols
 
 # DP ≠ Combinatorix
 
-<div class="mt-6 text-2xl">
+<div class=" text-2xl">
 
-$$C_n = \frac{1}{n+1}\binom{2n}{n}$$
+$$
+C_n = \frac{1}{n+1}\binom{2n}{n}
+$$
 
-$C_0 = \frac{1}{1}\binom{0}{0} = 1$
-
-$C_1 = \frac{1}{2}\binom{2}{1} = 1$
-
-$C_2 = \frac{1}{3}\binom{4}{2} = 2$
-
-$C_3 = \frac{1}{4}\binom{6}{3} = 5$
-
-$C_4 = \frac{1}{5}\binom{8}{4} = 14$
-
-$C_5 = \frac{1}{6}\binom{10}{5} = 42$
+$$
+\begin{array}{lcl}
+C_0 = \frac{1}{1}\binom{0}{0} &=& \color{#2dd4bf}\boxed{1} \\[6pt]
+C_1 = \frac{1}{2}\binom{2}{1} &=& \color{#2dd4bf}\boxed{1} \\[6pt]
+C_2 = \frac{1}{3}\binom{4}{2} &=& \color{#2dd4bf}\boxed{2} \\[6pt]
+C_3 = \frac{1}{4}\binom{6}{3} &=& \color{#2dd4bf}\boxed{5} \\[6pt]
+C_4 = \frac{1}{5}\binom{8}{4} &=& \color{#2dd4bf}\boxed{14} \\[6pt]
+C_5 = \frac{1}{6}\binom{10}{5} &=& \color{#2dd4bf}\boxed{42}
+\end{array}
+$$
 
 </div>
 
 ::right::
 
-<svg viewBox="0 0 320 320" class="mt-10 w-full mx-auto" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 310 310" class="mt-13 w-full mx-auto" xmlns="http://www.w3.org/2000/svg">
   <style>
     .cell { fill: #1e293b; stroke: #334155; stroke-width: 1; }
     .cell-diag { fill: #0d9488; fill-opacity: 0.25; stroke: #2dd4bf; stroke-width: 1.5; }
@@ -450,8 +451,8 @@ $C_5 = \frac{1}{6}\binom{10}{5} = 42$
     </marker>
   </defs>
   <!-- row 0 -->
-  <rect x="10" y="10" width="38" height="38" rx="4" class="cell-diag"/>
-  <text x="29" y="29" class="num-diag">1</text>
+  <rect x="10" y="10" width="38" height="38" rx="4" class="cell"/>
+  <text x="29" y="29" class="num">1</text>
   <!-- row 1 -->
   <rect x="10" y="62" width="38" height="38" rx="4" class="cell"/>
   <text x="29" y="81" class="num">1</text>
@@ -517,11 +518,11 @@ layout: center
 
 # Problem 1: House Robber
 
-<div class="problem-card mt-6">
-
-🏠 A robber has a list of houses, each with a known amount of money.
-
-He can't rob two adjacent houses in a row. Find the maximum amount he can steal. 💰
+<div class="problem-card">
+ 
+- 🏘️ A house robber has a list of houses with amount of gold in them
+- ⚠️ **He can't rob two neighbors** (it will be too suspicious)
+- 🎯 Maximize the total loot
 
 </div>
 
@@ -645,6 +646,13 @@ Base cases:
 - `dp[0] = nums[0]`
 - `dp[1] = max(nums[0], nums[1])`
 
+<style>
+.slidev-code {
+  font-size: 1.2em !important;
+  line-height: 1.5 !important;
+}
+</style>
+
 ---
 
 # Problem 1: House Robber: Solution
@@ -667,8 +675,7 @@ func rob(nums []int) int {
 
 <style>
 .slidev-code {
-  font-size: 1.2em !important;
-  line-height: 1.5 !important;
+  font-size: 1em !important;
 }
 </style>
 
