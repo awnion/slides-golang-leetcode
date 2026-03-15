@@ -48,49 +48,49 @@ layout: full
 -->
 
 <!-- Top row icons -->
-<img src="/icon-golang.png" class="absolute" style="width:100px; top:12px; left:35px; opacity:0.8; transform:rotate(-12deg)" />
-<img src="/icon-postgresql.png" class="absolute" style="width:80px; top:8px; left:50%; opacity:0.7; transform:translateX(-40px) rotate(7deg)" />
-<img src="/icon-rust.png" class="absolute" style="width:100px; top:12px; right:35px; opacity:0.8; transform:rotate(10deg)" />
+<img src="/icon-golang.png" class="absolute" style="width:120px; top:12px; left:35px; opacity:0.8; transform:rotate(-12deg)" />
+<img src="/icon-postgresql.png" class="absolute" style="width:80px; top:8px; left:50%; opacity:0.7; transform:translateX(-48px) rotate(7deg)" />
+<img src="/icon-rust.png" class="absolute" style="width:120px; top:12px; right:35px; opacity:0.8; transform:rotate(10deg)" />
 
 <!-- Middle row icons -->
-<img src="/icon-docker.png" class="absolute" style="width:100px; top:50%; left:30px; opacity:0.65; transform:translateY(-50%) rotate(8deg)" />
-<img src="/icon-react.svg" class="absolute" style="width:88px; top:50%; right:30px; opacity:0.65; transform:translateY(-50%) rotate(-11deg)" />
+<img src="/icon-docker.png" class="absolute" style="width:90px; top:50%; left:20px; opacity:0.65; transform:translateY(-50%) rotate(8deg)" />
+<img src="/icon-react.svg" class="absolute" style="width:90px; top:50%; right:10px; opacity:0.65; transform:translateY(-50%) rotate(-11deg)" />
 
 <!-- Bottom row icons -->
-<img src="/icon-python.png" class="absolute" style="width:80px; bottom:20px; left:40px; opacity:0.75; transform:rotate(-14deg)" />
-<div class="absolute" style="bottom:8px; left:50%; opacity:0.75; transform:translateX(-200px)">
-  <div style="font-size:13px; text-align:center; margin-bottom:4px; color:#D97757; font-style:italic; white-space:nowrap; font-weight:bold">You're absolutely right!</div>
-  <img src="/icon-claude.svg" style="width:65px; margin:0 auto; display:block" />
+<img src="/icon-python.png" class="absolute" style="width:96px; bottom:10px; left:20px; opacity:0.75; transform:rotate(-14deg)" />
+<div class="absolute" style="bottom:0px; left:45%; opacity:0.8; transform:translateX(-200px)">
+  <div style="font-size:16px; text-align:center; margin-bottom:4px; color:#D97757; font-style:italic; white-space:nowrap; font-weight:bold">You're absolutely right!</div>
+  <img src="/icon-claude.svg" style="width:78px; margin:0 auto; display:block" />
 </div>
-<img src="/icon-ansible.png" class="absolute" style="width:80px; bottom:10px; left:50%; opacity:0.6; transform:translateX(40px) rotate(9deg)" />
-<img src="/icon-bun.png" class="absolute" style="width:80px; bottom:20px; right:40px; opacity:0.75; transform:rotate(12deg)" />
+<img src="/icon-ansible.png" class="absolute" style="width:96px; bottom:0px; left:50%; opacity:0.6; transform:translateX(40px) rotate(9deg)" />
+<img src="/icon-bun.png" class="absolute" style="width:96px; bottom:20px; right:40px; opacity:0.75; transform:rotate(12deg)" />
 
 <!-- Top row formulas (between icons) -->
-<div class="absolute" style="top:50px; left:185px; opacity:0.40">
+<div class="absolute" style="top:50px; left:185px; opacity:0.40; transform: rotate(-9deg)">
 
 $P \neq NP$ ???
 
 </div>
-<div class="absolute" style="top:40px; right:175px; opacity:0.40">
+<div class="absolute" style="top:30px; right:200px; opacity:0.50; transform:rotate(11deg)">
 
 $e^{i\pi} + 1 = 0$
 
 </div>
 
 <!-- Middle row formulas (between icons and center) -->
-<div class="absolute" style="top:50%; left:170px; opacity:0.35; transform:translateY(-40px)">
+<div class="absolute" style="top:50%; left:170px; opacity:0.3; transform:translateY(45px) translateX(-60px) rotate(-11deg)">
 
 $\sum \frac{1}{n^2} = \frac{\pi^2}{6}$
 
 </div>
-<div class="absolute" style="top:50%; right:160px; opacity:0.35; transform:translateY(-40px); font-size:13px">
+<div class="absolute" style="top:50%; right:120px; opacity:0.3; transform:translateY(-50px); font-size:13px">
 
 $P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}$
 
 </div>
 
 <!-- Bottom row formulas (between icons) -->
-<div class="absolute" style="bottom:40px; right:160px; opacity:0.35">
+<div class="absolute" style="bottom:40px; right:160px; opacity:0.4; transform: rotate(9deg)">
 
 $O(n \log n)$
 
@@ -98,12 +98,12 @@ $O(n \log n)$
 
 <!-- Main content centered -->
 <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
-  <div class="font-bold mb-10" style="font-size:3.5rem; font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;">Sergei Blinov</div>
-  <div class="flex flex-col gap-3 text-lg">
-    <div><code>Senior Software Engineer at AckiNacki</code></div>
-    <div><code>Math enthusiast</code></div>
-    <div><code>Programming language polyglot</code></div>
-  </div>
+  <div class="font-bold mb-5" style="font-size:4rem; font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;">Sergei Blinov</div>
+  <ul>
+    <li><code>Senior Software Engineer @ AckiNacki</code></li>
+    <li><code>Math enthusiast</code></li>
+    <li><code>Programming language polyglot</code></li>
+  </ul>
 </div>
 
 </div>
@@ -115,17 +115,17 @@ layout: two-cols
 # Why companies still ask LeetCode
 
 <div class="lead">
-Because obviously the best way to evaluate engineers is a <span class="accent">timed puzzle contest</span>.
+Because obviously the best way to evaluate engineers is a <span class="accent">timed puzzle contest.</span>
 </div>
 
-- 10 years of production experience? Sorry, you forgot the two-pointer trick 😂
-- It's not a good test — it's a _convenient_ one
+- 10 years of production experience? — _sorry, you forgot the two-pointer trick_ 😂
+- It's not a good test — it's a <em>convenient</em> one
 - LLM solves LeetCode Hard from a screenshot faster than you can read it 😅
 - 40% of hiring managers don't trust it… but use it anyway 🤷
 
-<div class="pt-4 tiny text-[var(--text-muted)]">
+<p class="text-[var(--text-muted)] mt-2 color-yellow">
 And yet… here we all are, grinding LeetCode at midnight 🌙
-</div>
+</p>
 
 ::right::
 
@@ -198,10 +198,13 @@ And yet… here we all are, grinding LeetCode at midnight 🌙
 </div>
 
 ---
-layout: two-cols
----
 
 # Why is it called dynamic programming?
+
+<div class="flex flex-col float-right items-center mt-4 ml-8">
+  <img src="/bellman.jpg" alt="Richard Bellman" class="rounded-xl shadow-xl" style="width:280px;" />
+  <div class="mt-3 text-[var(--text-muted)] font-serif">Richard Bellman (1920–1984)</div>
+</div>
 
 - The name is historical, not descriptive
 - It does <span class="accent">not</span> mean "programming" as in writing code
@@ -211,13 +214,6 @@ layout: two-cols
 
 - "Programming" here means <span class="accent">planning</span> (as in "linear programming")
 - He deliberately chose a vague, impressive name to shield his research from politicians who were hostile to mathematics 🤷
-
-::right::
-
-<div class="flex flex-col items-center mt-4 ml-8">
-  <img src="/bellman.jpg" alt="Richard Bellman" class="rounded-xl shadow-xl" style="width:350px;" />
-  <div class="mt-3 text-sm text-[var(--text-muted)]">Richard Bellman (1920–1984)</div>
-</div>
 
 ---
 layout: two-cols
