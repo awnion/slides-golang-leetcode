@@ -684,7 +684,12 @@ func rob(nums []int) int {
 # Problem 2: Longest Increasing Subsequence
 
 <div class="problem-card mt-6">
-📈 Given an array of numbers, find the longest subsequence where each next element is strictly greater than the previous. Elements don't have to be adjacent. Return its length.
+
+- 🔢 An array of random numbers
+- 📈 Pick elements in strictly increasing order
+- 🔀 Elements don't have to be adjacent
+- 🎯 Find <span class="color-yellow">the longest</span> such subsequence
+
 </div>
 
 <svg viewBox="0 0 680 145" class="mt-4 w-full" xmlns="http://www.w3.org/2000/svg">
@@ -901,8 +906,6 @@ func rob(nums []int) int {
 
 - We are asking for the best subsequence that must end at a specific position
 
-## Transition
-
 ```go
 dp[i] = 1 + max(dp[j]) for all j < i where nums[j] < nums[i]
 ```
@@ -918,6 +921,12 @@ dp[i] = 1
 ```go
 return max(dp[i]) for all i
 ```
+
+<style>
+.slidev-code {
+  font-size: 1em !important;
+}
+</style>
 
 ---
 
@@ -944,10 +953,8 @@ func longestIncreasingSubsequence(nums []int) int {
 
 <style>
 .slidev-code {
-  font-size: 1em !important;
-  line-height: 1.5 !important;
+  font-size: 0.8em !important;
 }
-
 </style>
 
 ---
@@ -955,17 +962,77 @@ func longestIncreasingSubsequence(nums []int) int {
 # Problem 3: Cherry Pickup II
 
 <div class="lead">
-This is where DP starts to feel genuinely hard: the state must represent
-<span class="accent">two agents moving at the same time</span>.
+DP gets genuinely hard: the state encodes
+<span class="accent">two agents moving simultaneously</span>.
 </div>
 
-<div class="problem-card mt-6">
-Two robots start at the top row of a grid, one on the left and one on the right. On each step, both move to the next row and may shift by `-1`, `0`, or `+1` columns. Maximize the total cherries collected.
+<div class="flex gap-6 mt-4 items-center">
+
+<svg viewBox="0 0 380 380" class="w-96 shrink-0" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ah1" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
+      <polygon points="0 0, 6 4, 0 4" fill="#2dd4bf"/>
+    </marker>
+    <marker id="ah2" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
+      <polygon points="0 0, 6 4, 0 4" fill="#f472b6"/>
+    </marker>
+  </defs>
+  <!-- grid -->
+  <g>
+    <rect x="0" y="0" width="380" height="380" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <!-- cells -->
+    <g fill="#1e293b" stroke="#334155" stroke-width="0.5">
+      <rect x="10" y="10" width="68" height="68" rx="3"/><rect x="84" y="10" width="68" height="68" rx="3"/>
+      <rect x="158" y="10" width="68" height="68" rx="3"/><rect x="232" y="10" width="68" height="68" rx="3"/>
+      <rect x="306" y="10" width="68" height="68" rx="3"/>
+      <rect x="10" y="84" width="68" height="68" rx="3"/><rect x="84" y="84" width="68" height="68" rx="3"/>
+      <rect x="158" y="84" width="68" height="68" rx="3"/><rect x="232" y="84" width="68" height="68" rx="3"/>
+      <rect x="306" y="84" width="68" height="68" rx="3"/>
+      <rect x="10" y="158" width="68" height="68" rx="3"/><rect x="84" y="158" width="68" height="68" rx="3"/>
+      <rect x="158" y="158" width="68" height="68" rx="3"/><rect x="232" y="158" width="68" height="68" rx="3"/>
+      <rect x="306" y="158" width="68" height="68" rx="3"/>
+      <rect x="10" y="232" width="68" height="68" rx="3"/><rect x="84" y="232" width="68" height="68" rx="3"/>
+      <rect x="158" y="232" width="68" height="68" rx="3"/><rect x="232" y="232" width="68" height="68" rx="3"/>
+      <rect x="306" y="232" width="68" height="68" rx="3"/>
+      <rect x="10" y="306" width="68" height="68" rx="3"/><rect x="84" y="306" width="68" height="68" rx="3"/>
+      <rect x="158" y="306" width="68" height="68" rx="3"/><rect x="232" y="306" width="68" height="68" rx="3"/>
+      <rect x="306" y="306" width="68" height="68" rx="3"/>
+    </g>
+    <!-- cherries (sparse, random-ish) -->
+    <text font-size="13" text-anchor="middle">
+      <tspan x="192" y="50">🍒</tspan>
+      <tspan x="44" y="124">🍒</tspan>
+      <tspan x="266" y="124">🍒</tspan>
+      <tspan x="118" y="198">🍒</tspan>
+      <tspan x="340" y="272">🍒</tspan>
+      <tspan x="44" y="346">🍒</tspan>
+      <tspan x="232" y="346">🍒</tspan>
+    </text>
+    <!-- robot 1 -->
+    <text font-size="22" text-anchor="middle" x="44" y="52">🤖</text>
+    <!-- robot 2 -->
+    <text font-size="22" text-anchor="middle" x="340" y="52">🤖</text>
+    <!-- path 1: robot 1 going down-right (teal), wavy -->
+    <path d="M 44 65 C 100 75, 60 110, 118 118 C 170 125, 140 175, 192 192 C 240 200, 210 250, 266 266 C 315 275, 285 320, 330 335"
+          fill="none" stroke="#2dd4bf" stroke-width="2.5" stroke-dasharray="6 3" opacity="0.85" marker-end="url(#ah1)"/>
+    <!-- path 2: robot 2 going down-left (pink), wavy -->
+    <path d="M 340 65 C 285 75, 320 110, 266 118 C 215 125, 245 175, 192 192 C 140 200, 170 250, 118 266 C 65 275, 100 320, 50 335"
+          fill="none" stroke="#f472b6" stroke-width="2.5" stroke-dasharray="6 3" opacity="0.85" marker-end="url(#ah2)"/>
+  </g>
+</svg>
+
+<div>
+
+- https://leetcode.com/problems/cherry-pickup-ii/
+- 🤖 Two robots start at **top-left** and **top-right**
+- ⬇️ Both move down one row per step
+- ↔️ Each can shift **-1**, **0**, or **+1** column
+- 🍒 Collect cherries from visited cells
+- 🎯 Maximize total cherries
+
 </div>
 
-- A greedy approach fails quickly
-- A naive DFS explodes because the branching factor is large
-- The key is to encode both robot positions in the state
+</div>
 
 ---
 
@@ -1024,36 +1091,46 @@ Complexity:
 - Total: `O(rows * cols²)`
 
 ---
+layout: two-cols
+---
 
 # Cherry Pickup II in Go
 
+<div class="mr-6">
+
 ```go
 func cherryPickup(grid [][]int) int {
-	rows, cols := len(grid), len(grid[0])
+  rows, cols := len(grid), len(grid[0])
 	dp := make([][][]int, rows)
-	for r := 0; r < rows; r++ {
+	for r := range rows {
 		dp[r] = make([][]int, cols)
-		for c1 := 0; c1 < cols; c1++ {
+		for c1 := range cols {
 			dp[r][c1] = make([]int, cols)
 		}
 	}
 
-	for c1 := 0; c1 < cols; c1++ {
-		for c2 := 0; c2 < cols; c2++ {
+	for c1 := range cols {
+		for c2 := range cols {
 			dp[rows-1][c1][c2] = grid[rows-1][c1]
 			if c1 != c2 {
 				dp[rows-1][c1][c2] += grid[rows-1][c2]
 			}
 		}
 	}
+	
+```
 
+</div>
+
+:: right ::
+
+```go
 	for r := rows - 2; r >= 0; r-- {
-		for c1 := 0; c1 < cols; c1++ {
-			for c2 := 0; c2 < cols; c2++ {
+		for c1 := range cols {
+			for c2 := range cols {
 				best := 0
-				for d1 := -1; d1 <= 1; d1++ {
-					for d2 := -1; d2 <= 1; d2++ {
-						nc1, nc2 := c1+d1, c2+d2
+				for nc1 := c1 - 1; nc1 <= c1+1; nc1++ {
+					for nc2 := c2 - 1; nc2 <= c2+1; nc2++ {
 						if nc1 >= 0 && nc1 < cols && nc2 >= 0 && nc2 < cols {
 							best = max(best, dp[r+1][nc1][nc2])
 						}
@@ -1067,10 +1144,15 @@ func cherryPickup(grid [][]int) int {
 			}
 		}
 	}
-
 	return dp[0][0][cols-1]
 }
 ```
+
+<style>
+.slidev-code {
+  font-size: 0.7em !important;
+}
+</style>
 
 ---
 
