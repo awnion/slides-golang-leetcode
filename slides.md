@@ -3,19 +3,19 @@ theme: default
 title: Dynamic Programming Through LeetCode
 titleTemplate: "%s"
 info: |
-  A Slidev deck about dynamic programming patterns in interview-style problems.
+    A Slidev deck about dynamic programming patterns in interview-style problems.
 class: text-left
 drawings:
-  persist: false
+    persist: false
 transition: slide-left
 mdc: true
 highlighter: shiki
 shiki:
-  light: github-light
-  dark: one-dark-pro
+    light: github-light
+    dark: one-dark-pro
 fonts:
-  sans: IBM Plex Sans
-  mono: afio
+    sans: IBM Plex Sans
+    mono: afio
 layout: center
 ---
 
@@ -328,8 +328,8 @@ Memoization is a <span class="accent">technique</span> that often implements DP,
 - It is the standard way to implement top-down DP
 - But caching an HTTP response is memoization too — not DP
 - DP requires two properties:
-  - <span class="accent">Optimal substructure</span>
-  - <span class="accent">Overlapping subproblems</span>
+    - <span class="accent">Optimal substructure</span>
+    - <span class="accent">Overlapping subproblems</span>
 
 ---
 layout: two-cols
@@ -358,8 +358,8 @@ Coins = `{1, 3, 4}`, target = `6`
 - Greedy makes the <span class="accent">locally best</span> and never looks back
 - Greedy works when local optimum guarantees global optimum
 - Classic example: **Coin Change**
-  - <span class="text-green-400">Greedy works</span> for `{1, 5, 10, 25}` — always pick the biggest coin
-  - <span class="text-red-400">Greedy fails</span> for `{1, 3, 4}`, target `6`: greedy gives `4+1+1`, DP gives `3+3`
+    - <span class="text-green-400">Greedy works</span> for `{1, 5, 10, 25}` — always pick the biggest coin
+    - <span class="text-red-400">Greedy fails</span> for `{1, 3, 4}`, target `6`: greedy gives `4+1+1`, DP gives `3+3`
 
 ---
 
@@ -400,7 +400,7 @@ Coins = `{1, 3, 4}`, target = `6`
    / \
   *   * ✓ reuse
  /\
-*  * ✓ cache 
+*  * ✓ cache
     </pre>
     <div class="mt-4 text-lg font-bold text-[var(--brand-accent)]">DP</div>
     <div class="text-sm text-gray-500 mt-1">cache &amp; reuse subproblems</div>
@@ -519,7 +519,7 @@ layout: center
 # Problem 1: House Robber
 
 <div class="problem-card">
- 
+
 - 🏘️ A house robber has a list of houses with amount of gold in them
 - ⚠️ **He can't rob two neighbors** (it will be too suspicious)
 - 🎯 Maximize the total loot
@@ -935,19 +935,19 @@ return max(dp[i]) for all i
 ```go
 func longestIncreasingSubsequence(nums []int) int {
 	dp := make([]int, len(nums))
-	best := 1
+	globalMax := 1
 
 	for i := range nums {
-		dp[i] = 1
-		for j := 0; j < i; j++ {
+		localMax := 1
+		for j := range i {
 			if nums[j] < nums[i] {
-				dp[i] = max(dp[i], dp[j]+1)
+				localMax = max(localMax, dp[j]+1)
 			}
 		}
-		best = max(best, dp[i])
+		dp[i], globalMax = localMax, max(globalMax, localMax)
 	}
 
-	return best
+	return globalMax
 }
 ```
 
@@ -1117,7 +1117,7 @@ func cherryPickup(grid [][]int) int {
 			}
 		}
 	}
-	
+
 ```
 
 </div>
