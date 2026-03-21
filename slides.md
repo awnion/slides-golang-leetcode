@@ -1248,41 +1248,61 @@ func cherryPickupTwo(grid [][]int) int {
 
 ---
 
-# <span style="color: var(--slidev-theme-primary)">Summary:</span> what we've learned
+# <span style="color: var(--slidev-theme-primary)">Summary:</span> Key Takeaways
 
-1. `House Robber`: a DP state can be tiny (only current and previous "bests")
-2. `LIS`: the hard part is often defining the right subproblem
-3. `Cherry Pickup II`:
-    - complexity jumps when the state tracks multiple moving pieces
-    - state can describe multiple agents
+1. `House Robber`: State can be **very small** (just 2 variables)
+2. `LIS`: Defining the **right subproblem** is the key
+3. `Cherry Pickup II`: State can track **multiple agents** at once
 
----
+<div class="mt-10"></div>
 
-# The recurring checklist is always the same:
+# Memo: DP Checklist
 
 - What does my <span style="color: var(--slidev-theme-primary)">**state**</span> mean?
-- What choices move me to the <span style="color: var(--slidev-theme-primary)">**next state**</span>?
+- How to move to the <span style="color: var(--slidev-theme-primary)">**next state**</span>?
 - What is the <span style="color: var(--slidev-theme-primary)">**base case**</span>?
-- Can I <span class="color-yellow">**reduce memory**</span> without losing information? (e.g. wave optimization)
+- Can I <span class="color-yellow">**save memory**</span>? (e.g. wave optimization)
 
 ---
 layout: center
 ---
 
-# Thank You!
-## Questions?
+<div class="text-center mt-4 mb-6">
+  <div class="text-5xl bg-clip-text font-bold" style="font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;">Questions?</div>
+</div>
 
-<div class="flex justify-center gap-80 mt-12">
-  <div class="flex flex-col items-center">
-    <div class="bg-white p-2 rounded-lg">
-      <img src="/qr-github.png" alt="GitHub Repo" class="w-64" />
+<div class="flex flex-row justify-center gap-60 items-start w-full px-8">
+  <!-- GitHub Card -->
+  <div class="flex flex-col items-center rounded-3xl">
+    <div class="mt-4 text-center flex flex-col items-center">
+      <div class="text-teal-400 text-1xl font-bold mb-2">
+        Golang Source Code & Slides
+      </div>
     </div>
-    <span class="mt-2 text-slate-400 font-mono text-sm">github.com/awnion/presentation-golang-leetcode</span>
+    <div class="bg-white p-3 rounded-2xl mt-2">
+      <img src="/qr-github.png" alt="GitHub Repo" class="h-64 w-64" />
+    </div>
+    <div class="text-slate-300 font-mono text-xs mt-1">
+      github.com/awnion/slides-golang-leetcode
+    </div>
   </div>
-  <div class="flex flex-col items-center">
-    <div class="bg-white p-2 rounded-lg">
-      <img src="/qr-linkedin.png" alt="LinkedIn Profile" class="w-64" />
+
+  <!-- LinkedIn Card -->
+  <div class="flex flex-col items-center rounded-3xl">
+    <div class="mt-4 text-center flex flex-col items-center">
+      <div class="text-amber-400 text-1xl font-bold mb-2">Let's Connect on LinkedIn :)</div>
     </div>
-    <span class="mt-2 text-slate-400 font-mono">linkedin.com/in/awnion</span>
+    <div class="bg-white p-3 rounded-2xl mt-2">
+      <img src="/qr-linkedin.png" alt="LinkedIn" class="h-64 w-64" />
+    </div>
+    <div class="text-slate-300 font-mono text-xs mt-1">
+      linkedin.com/in/awnion
+    </div>
+  </div>
+</div>
+
+<div class="text-center mt-6">
+  <div class="text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-amber-400 drop-shadow-sm" style="font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;">
+    Thank You!
   </div>
 </div>
