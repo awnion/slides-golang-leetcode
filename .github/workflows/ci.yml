@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      problems: ${{ steps.diff.outputs.problems }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+
+      - id: diff
+        name: Check if problems changed
+        run: |
+          if git diff --name-only HEAD~1 HEAD | grep -q '^problems/'; then
+            echo "problems=true" >> $GITHUB_OUTPUT
+          else
+            echo "problems=false" >> $GITHUB_OUTPUT
+          fi
+
+  test:
+    name: Test Go Problems
+    needs: changes
+    if: needs.changes.outputs.problems == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: problems/house_robber/go.mod
+
+      - name: Run tests
+        run: |
+          for d in problems/*/; do
+            echo "=== $d ==="
+            (cd "$d" && go test ./...)
+          done
+
+  deploy:
+    name: Deploy to Cloudflare Pages
+    needs: [changes, test]
+    if: always() && !failure() && !cancelled()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: bun run build
+
+      - name: Deploy
+        run: bunx wrangler pages deploy dist --project-name=presentation-golang-leetcode-dp --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
