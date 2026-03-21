@@ -79,6 +79,14 @@ func TestCherryPickupTwo(t *testing.T) {
 			if actual != tc.expected {
 				t.Errorf("%s: expected %d, but got %d", tc.name, tc.expected, actual)
 			}
+
+		})
+
+		t.Run(tc.name+" naive", func(t *testing.T) {
+			actualNaive := cherryPickupTwoNaive(tc.grid)
+			if actualNaive != tc.expected {
+				t.Errorf("%s: expected %d, but got %d", tc.name, tc.expected, actualNaive)
+			}
 		})
 	}
 }
