@@ -120,3 +120,7 @@ h1, h2, h3 {
 .tiny {
     font-size: 0.92rem;
 }
+
+.font-serif-classic {
+    font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+}

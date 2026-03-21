@@ -7,7 +7,7 @@ info: |
 class: text-left
 drawings:
     persist: false
-transition: fade-out
+transition: slide-left
 mdc: true
 highlighter: shiki
 shiki:
@@ -22,7 +22,7 @@ layout: center
 <div class="grid grid-cols-[1fr_1fr] gap-4 items-center w-full">
   <div>
     <div class="uppercase text-base font-bold text-[var(--brand-accent)] text-4xl">LeetCode Problems on Go</div>
-    <div class="mt-2 font-bold text-6xl" style="font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;">Dynamic Programming</div>
+    <div class="mt-2 font-bold text-6xl font-serif-classic">Dynamic Programming</div>
     <div class="mt-12 items-center color-[var(--text-secondary)]">Sergei Blinov · AckiNacki</div>
   </div>
 
@@ -98,7 +98,7 @@ $O(n \log n)$
 
 <!-- Main content centered -->
 <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
-  <div class="font-bold mb-5" style="font-size:4rem; font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;">Sergei Blinov</div>
+  <div class="font-bold mb-5 font-serif-classic" style="font-size:4rem;">Sergei Blinov</div>
   <ul>
     <li><code>Senior Software Engineer @ AckiNacki</code></li>
     <li><code>Math enthusiast</code></li>
@@ -1268,7 +1268,7 @@ layout: center
 ---
 
 <div class="text-center mt-4 mb-6">
-  <div class="text-5xl bg-clip-text font-bold" style="font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;">Questions?</div>
+  <div class="text-5xl bg-clip-text font-bold font-serif-classic">Questions?</div>
 </div>
 
 <div class="grid grid-cols-2 gap-x-60 gap-y-4 justify-items-center w-full px-8">
@@ -1298,7 +1298,7 @@ layout: center
 </div>
 
 <div class="text-center mt-6">
-  <div class="text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-amber-400 drop-shadow-sm" style="font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;">
+  <div class="text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-amber-400 drop-shadow-sm font-serif-classic">
     Thank You!
   </div>
 </div>
