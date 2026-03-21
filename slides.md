@@ -961,82 +961,113 @@ func longestIncreasingSubsequence(nums []int) int {
 
 # Problem 3: Cherry Pickup II
 
-<div class="lead">
-DP gets genuinely hard: the state encodes
-<span class="accent">two agents moving simultaneously</span>.
+<div class="flex flex-col float-right items-center">
+  <img src="/cherry-pickup-two.png" alt="Cherry Pickup II" class="w-[470px]" />
 </div>
 
-<div class="flex gap-6 mt-4 items-center">
+DP gets genuinely <b>hard</b>:
 
-<svg viewBox="0 0 380 380" class="w-96 shrink-0" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <marker id="ah1" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
-      <polygon points="0 0, 6 4, 0 4" fill="#2dd4bf"/>
-    </marker>
-    <marker id="ah2" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
-      <polygon points="0 0, 6 4, 0 4" fill="#f472b6"/>
-    </marker>
-  </defs>
-  <!-- grid -->
-  <g>
-    <rect x="0" y="0" width="380" height="380" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
-    <!-- cells -->
-    <g fill="#1e293b" stroke="#334155" stroke-width="0.5">
-      <rect x="10" y="10" width="68" height="68" rx="3"/><rect x="84" y="10" width="68" height="68" rx="3"/>
-      <rect x="158" y="10" width="68" height="68" rx="3"/><rect x="232" y="10" width="68" height="68" rx="3"/>
-      <rect x="306" y="10" width="68" height="68" rx="3"/>
-      <rect x="10" y="84" width="68" height="68" rx="3"/><rect x="84" y="84" width="68" height="68" rx="3"/>
-      <rect x="158" y="84" width="68" height="68" rx="3"/><rect x="232" y="84" width="68" height="68" rx="3"/>
-      <rect x="306" y="84" width="68" height="68" rx="3"/>
-      <rect x="10" y="158" width="68" height="68" rx="3"/><rect x="84" y="158" width="68" height="68" rx="3"/>
-      <rect x="158" y="158" width="68" height="68" rx="3"/><rect x="232" y="158" width="68" height="68" rx="3"/>
-      <rect x="306" y="158" width="68" height="68" rx="3"/>
-      <rect x="10" y="232" width="68" height="68" rx="3"/><rect x="84" y="232" width="68" height="68" rx="3"/>
-      <rect x="158" y="232" width="68" height="68" rx="3"/><rect x="232" y="232" width="68" height="68" rx="3"/>
-      <rect x="306" y="232" width="68" height="68" rx="3"/>
-      <rect x="10" y="306" width="68" height="68" rx="3"/><rect x="84" y="306" width="68" height="68" rx="3"/>
-      <rect x="158" y="306" width="68" height="68" rx="3"/><rect x="232" y="306" width="68" height="68" rx="3"/>
-      <rect x="306" y="306" width="68" height="68" rx="3"/>
-    </g>
-    <!-- cherries (sparse, random-ish) -->
-    <text font-size="13" text-anchor="middle">
-      <tspan x="192" y="50">🍒</tspan>
-      <tspan x="44" y="124">🍒</tspan>
-      <tspan x="266" y="124">🍒</tspan>
-      <tspan x="118" y="198">🍒</tspan>
-      <tspan x="340" y="272">🍒</tspan>
-      <tspan x="44" y="346">🍒</tspan>
-      <tspan x="232" y="346">🍒</tspan>
-    </text>
-    <!-- robot 1 -->
-    <text font-size="22" text-anchor="middle" x="44" y="52">🤖</text>
-    <!-- robot 2 -->
-    <text font-size="22" text-anchor="middle" x="340" y="52">🤖</text>
-    <!-- path 1: robot 1 going down-right (teal), wavy -->
-    <path d="M 44 65 C 100 75, 60 110, 118 118 C 170 125, 140 175, 192 192 C 240 200, 210 250, 266 266 C 315 275, 285 320, 330 335"
-          fill="none" stroke="#2dd4bf" stroke-width="2.5" stroke-dasharray="6 3" opacity="0.85" marker-end="url(#ah1)"/>
-    <!-- path 2: robot 2 going down-left (pink), wavy -->
-    <path d="M 340 65 C 285 75, 320 110, 266 118 C 215 125, 245 175, 192 192 C 140 200, 170 250, 118 266 C 65 275, 100 320, 50 335"
-          fill="none" stroke="#f472b6" stroke-width="2.5" stroke-dasharray="6 3" opacity="0.85" marker-end="url(#ah2)"/>
-  </g>
-</svg>
+Multi-agent optimization
 
-<div>
 
-- https://leetcode.com/problems/cherry-pickup-ii/
-- 🤖 Two robots start at **top-left** and **top-right**
+- 🤖 Two robots: **top-left** and **top-right**
 - ⬇️ Both move down one row per step
 - ↔️ Each can shift **-1**, **0**, or **+1** column
 - 🍒 Collect cherries from visited cells
 - 🎯 Maximize total cherries
 
-</div>
+---
 
-</div>
+# Problem 3: Observation
+
+## We can always assume that robot A is to the left of robot B
+
+<svg viewBox="0 0 600 260" class="w-full" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .grid-dot { fill: #334155; }
+    .path-a { stroke: #2dd4bf; stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .path-b { stroke: #fbbf24; stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .node-a { fill: #2dd4bf; stroke: #1e293b; stroke-width: 2; }
+    .node-b { fill: #fbbf24; stroke: #1e293b; stroke-width: 2; }
+    .lbl { fill: #94a3b8; font-family: sans-serif; font-size: 15px; font-weight: bold; text-anchor: middle; }
+    .lbl-sub { fill: #64748b; font-family: sans-serif; font-size: 13px; text-anchor: middle; }
+    .arrow { stroke: #64748b; stroke-width: 2; fill: none; marker-end: url(#arr); }
+  </style>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="3" class="grid-dot" />
+    </pattern>
+    <marker id="arr" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto">
+      <path d="M0,0 L6,2 L0,4" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Background Grid Left -->
+  <rect x="40" y="40" width="240" height="180" fill="url(#grid)" />
+
+  <!-- Paths Left -->
+  <path class="path-a" d="M 100 60 L 140 100 L 180 140 L 220 180 L 220 220" />
+  <path class="path-b" d="M 220 60 L 180 100 L 140 140 L 100 180 L 100 220" />
+
+  <!-- Nodes Left A -->
+  <circle cx="100" cy="60" r="6" class="node-a" />
+  <circle cx="140" cy="100" r="6" class="node-a" />
+  <circle cx="180" cy="140" r="6" class="node-a" />
+  <circle cx="220" cy="180" r="6" class="node-a" />
+  <circle cx="220" cy="220" r="6" class="node-a" />
+
+  <!-- Nodes Left B -->
+  <circle cx="220" cy="60" r="5" class="node-b" />
+  <circle cx="180" cy="100" r="5" class="node-b" />
+  <circle cx="140" cy="140" r="5" class="node-b" />
+  <circle cx="100" cy="180" r="5" class="node-b" />
+  <circle cx="100" cy="220" r="5" class="node-b" />
+
+  <!-- A and B initial labels -->
+  <text x="100" y="45" font-family="sans-serif" font-size="12" font-weight="bold" fill="#2dd4bf" text-anchor="middle">1</text>
+  <text x="220" y="45" font-family="sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="middle">2</text>
+
+  <!-- Transformation Arrow -->
+  <path class="arrow" d="M 290 140 L 310 140" />
+
+  <!-- Background Grid Right -->
+  <rect x="320" y="40" width="240" height="180" fill="url(#grid)" />
+
+  <!-- Paths Right -->
+  <path class="path-a" d="M 380 60 L 420 100 L 420 140 L 380 180 L 380 220" />
+  <path class="path-b" d="M 500 60 L 460 100 L 460 140 L 500 180 L 500 220" />
+
+  <!-- Nodes Right A -->
+  <circle cx="380" cy="60" r="6" class="node-a" />
+  <circle cx="420" cy="100" r="6" class="node-a" />
+  <circle cx="420" cy="140" r="6" class="node-a" />
+  <circle cx="380" cy="180" r="6" class="node-a" />
+  <circle cx="380" cy="220" r="6" class="node-a" />
+
+  <!-- Nodes Right B -->
+  <circle cx="500" cy="60" r="5" class="node-b" />
+  <circle cx="460" cy="100" r="5" class="node-b" />
+  <circle cx="460" cy="140" r="5" class="node-b" />
+  <circle cx="500" cy="180" r="5" class="node-b" />
+  <circle cx="500" cy="220" r="5" class="node-b" />
+
+  <!-- A and B initial labels Right -->
+  <text x="380" y="45" font-family="sans-serif" font-size="12" font-weight="bold" fill="#2dd4bf" text-anchor="middle">1</text>
+  <text x="500" y="45" font-family="sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="middle">2</text>
+
+  <!-- Highlight region where swap happens -->
+  <!-- Left Side: highlight between row 1 and 2 -->
+  <ellipse cx="160" cy="120" rx="30" ry="20" fill="none" stroke="#f43f5e" stroke-width="2" stroke-dasharray="4" />
+  <!-- Right Side: highlight swap space -->
+  <ellipse cx="440" cy="120" rx="30" ry="20" fill="none" stroke="#22c55e" stroke-width="2" stroke-dasharray="4" />
+
+</svg>
+
+It doesn't really help us tho 🤷 Yet can be used in the final optimization
 
 ---
 
-# Cherry Pickup II: state design
+# Problem 3: State Design
 
 State:
 
@@ -1049,58 +1080,56 @@ Meaning:
 - we are on `row`
 - robot A is at `col1`
 - robot B is at `col2`
-- value = maximum cherries collectable from this state to the bottom
-
-Transition:
-
-- each robot has 3 moves
-- total next states per step = `3 x 3 = 9`
-
-Reward on the current row:
-
-```text
-grid[row][col1] + grid[row][col2]
-```
-
-If `col1 == col2`, count that cell only once.
+- value = maximum cherries collectable from this state
 
 ---
 
-# Cherry Pickup II: recurrence
+# Problem 3: DP Direction
+
+## **Top to bottom** OR **bottom to top**?
+
+- First position of robots are fixed `dp[0][0][cols-1]`
+- Last position of robots are NOT fixed `max(dp[rows-1][c1][c2]) for all c1, c2`
+
+- We need to deal with unreachable states
+  - If we go top to bottom, we need to initialize dp with `-Infinity` (or some value that is smaller than any possible value)
+  - If we go bottom to top, that's ok to initialize dp with 0, because in the end we just check `dp[0][0][cols-1]` and ignore other states on the top row
+
+So it's better to iterate from <span style="color: #2dd4bf">**bottom to top**</span>
+
+---
+
+# Problem 3: Recurrence
 
 ```text
-dp[row][c1][c2] =
-  cherries(row, c1, c2) +
+dp[row - 1][col1][col2] =
+  cherries(row - 1, col1, col2) +
   max(
-    dp[row + 1][nc1][nc2]
-    for nc1 in {c1 - 1, c1, c1 + 1}
-    for nc2 in {c2 - 1, c2, c2 + 1}
+    dp[row][col1 - 1][col2 - 1], dp[row][col1 - 1][col2], dp[row][col1 - 1][col2 + 1],
+    dp[row][col1    ][col2 - 1], dp[row][col1    ][col2], dp[row][col1    ][col2 + 1],
+    dp[row][col1 + 1][col2 - 1], dp[row][col1 + 1][col2], dp[row][col1 + 1][col2 + 1],
   )
 ```
 
-Important details:
+<style>
+.slidev-code {
+  font-size: 0.9em !important;
+}
+</style>
 
-- invalid columns must be skipped
-- the last row is the base case
-- top-down memoization and bottom-up DP both work
-
-Complexity:
-
-- States: `O(rows * cols * cols)`
-- Transitions per state: constant (`9`)
-- Total: `O(rows * cols²)`
 
 ---
 layout: two-cols
 ---
 
-# Cherry Pickup II in Go
+# Problem 3: Solution
 
 <div class="mr-6">
 
 ```go
-func cherryPickup(grid [][]int) int {
-  rows, cols := len(grid), len(grid[0])
+// naive = 3D DP or O(row * col^2) memory
+func cherryPickupTwoNaive(grid [][]int) int {
+	rows, cols := len(grid), len(grid[0])
 	dp := make([][][]int, rows)
 	for r := range rows {
 		dp[r] = make([][]int, cols)
@@ -1131,16 +1160,16 @@ func cherryPickup(grid [][]int) int {
 				best := 0
 				for nc1 := c1 - 1; nc1 <= c1+1; nc1++ {
 					for nc2 := c2 - 1; nc2 <= c2+1; nc2++ {
-						if nc1 >= 0 && nc1 < cols && nc2 >= 0 && nc2 < cols {
+						if nc1 >= 0 && nc1 < cols &&
+							nc2 >= 0 && nc2 < cols {
 							best = max(best, dp[r+1][nc1][nc2])
 						}
 					}
 				}
-				dp[r][c1][c2] = grid[r][c1]
+				dp[r][c1][c2] = best + grid[r][c1]
 				if c1 != c2 {
 					dp[r][c1][c2] += grid[r][c2]
 				}
-				dp[r][c1][c2] += best
 			}
 		}
 	}
@@ -1155,48 +1184,105 @@ func cherryPickup(grid [][]int) int {
 </style>
 
 ---
+layout: two-cols
+---
 
-# What these three problems teach
+# Problem 3: "Wave" Optimization
 
-1. `House Robber`: a DP state can be tiny and still powerful
-2. `LIS`: the hard part is often defining the right subproblem
-3. `Cherry Pickup II`: complexity jumps when the state tracks multiple moving pieces
+<div class="mr-6">
 
-<div class="pt-8 lead">
-The recurring checklist is always the same:
+```go
+// O(row * col) memory optimization
+func cherryPickupTwo(grid [][]int) int {
+	rows, cols := len(grid), len(grid[0])
+	next, curr := make([][]int, cols), make([][]int, cols)
+	for c := range cols {
+		next[c] = make([]int, cols)
+		curr[c] = make([]int, cols)
+	}
+
+	// base case: last row
+	for c1 := range cols {
+		for c2 := range cols {
+			next[c1][c2] = grid[rows-1][c1]
+			if c1 != c2 {
+				next[c1][c2] += grid[rows-1][c2]
+			}
+		}
+	}
+```
 </div>
 
-- What does my state mean?
-- What choices move me to the next state?
-- What is the base case?
-- Can I reduce memory without losing information?
+:: right ::
+
+```go
+	for r := rows - 2; r >= 0; r-- {
+		for c1 := range cols {
+			for c2 := range cols {
+				best := 0
+				for nc1 := c1 - 1; nc1 <= c1+1; nc1++ {
+					for nc2 := c2 - 1; nc2 <= c2+1; nc2++ {
+						if nc1 >= 0 && nc1 < cols &&
+							nc2 >= 0 && nc2 < cols {
+							best = max(best, next[nc1][nc2])
+						}
+					}
+				}
+				curr[c1][c2] = best + grid[r][c1]
+				if c1 != c2 {
+					curr[c1][c2] += grid[r][c2]
+				}
+			}
+		}
+		next, curr = curr, next
+	}
+	return next[0][cols-1]
+}
+```
+
+<style>
+.slidev-code {
+  font-size: 0.7em !important;
+}
+</style>
 
 ---
 
-# References
+# <span style="color: var(--slidev-theme-primary)">Summary:</span> what we've learned
 
-- [House Robber](https://leetcode.com/problems/house-robber/)
-- [Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)
-- [Cherry Pickup II](https://leetcode.com/problems/cherry-pickup-ii/)
-- [Slidev Documentation](https://sli.dev/)
+1. `House Robber`: a DP state can be tiny (only current and previous "bests")
+2. `LIS`: the hard part is often defining the right subproblem
+3. `Cherry Pickup II`:
+    - complexity jumps when the state tracks multiple moving pieces
+    - state can describe multiple agents
 
-<div class="pt-8 text-[var(--text-muted)]">
-Optional ending ideas:
-</div>
+---
 
-- "If you panic in DP, start by naming the state."
-- "Interview DP is usually less about magic and more about bookkeeping."
-- Add your GitHub / LinkedIn / QR code here.
+# The recurring checklist is always the same:
+
+- What does my <span style="color: var(--slidev-theme-primary)">**state**</span> mean?
+- What choices move me to the <span style="color: var(--slidev-theme-primary)">**next state**</span>?
+- What is the <span style="color: var(--slidev-theme-primary)">**base case**</span>?
+- Can I <span class="color-yellow">**reduce memory**</span> without losing information? (e.g. wave optimization)
 
 ---
 layout: center
-class: text-center
 ---
 
-# Thank You
+# Thank You!
+## Questions?
 
-Questions?
-
-<div class="pt-6 text-[var(--text-muted)]">
-`your.name@example.com` • `github.com/your-handle`
+<div class="flex justify-center gap-80 mt-12">
+  <div class="flex flex-col items-center">
+    <div class="bg-white p-2 rounded-lg">
+      <img src="/qr-github.png" alt="GitHub Repo" class="w-64" />
+    </div>
+    <span class="mt-2 text-slate-400 font-mono text-sm">github.com/awnion/presentation-golang-leetcode</span>
+  </div>
+  <div class="flex flex-col items-center">
+    <div class="bg-white p-2 rounded-lg">
+      <img src="/qr-linkedin.png" alt="LinkedIn Profile" class="w-64" />
+    </div>
+    <span class="mt-2 text-slate-400 font-mono">linkedin.com/in/awnion</span>
+  </div>
 </div>
