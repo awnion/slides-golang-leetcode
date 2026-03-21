@@ -1,23 +1,16 @@
-# slides-golang-leetcode
+# SLIDES: LeetCode Problems on Go: Dynamic Programming
 
-Slidev presentation about interview-style dynamic programming problems, with all solution slides written in Go.
-
-## Setup
+## Run presentation
 
 ```bash
 bun install
-```
-
-## Run the deck
-
-```bash
 bun run dev
 ```
 
-## Build
+Main deck file: `slides.md`
+
+## Run golang code
 
 ```bash
-bun run build
+make test
 ```
-
-Main deck file: `slides.md`
