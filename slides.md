@@ -1,13 +1,13 @@
 ---
 theme: default
-title: Dynamic Programming Through LeetCode
+title: "LeetCode Problems on Go: Dynamic Programming"
 titleTemplate: "%s"
 info: |
     A Slidev deck about dynamic programming patterns in interview-style problems.
 class: text-left
 drawings:
     persist: false
-transition: slide-left
+transition: fade-out
 mdc: true
 highlighter: shiki
 shiki:
@@ -1195,13 +1195,13 @@ layout: two-cols
 // O(row * col) memory optimization
 func cherryPickupTwo(grid [][]int) int {
 	rows, cols := len(grid), len(grid[0])
-	next, curr := make([][]int, cols), make([][]int, cols)
+	next := make([][]int, cols)
+	curr := make([][]int, cols)
 	for c := range cols {
 		next[c] = make([]int, cols)
 		curr[c] = make([]int, cols)
 	}
-
-	// base case: last row
+	// DP base : last row
 	for c1 := range cols {
 		for c2 := range cols {
 			next[c1][c2] = grid[rows-1][c1]
@@ -1271,33 +1271,29 @@ layout: center
   <div class="text-5xl bg-clip-text font-bold" style="font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;">Questions?</div>
 </div>
 
-<div class="flex flex-row justify-center gap-60 items-start w-full px-8">
-  <!-- GitHub Card -->
-  <div class="flex flex-col items-center rounded-3xl">
-    <div class="mt-4 text-center flex flex-col items-center">
-      <div class="text-teal-400 text-1xl font-bold mb-2">
-        Golang Source Code & Slides
-      </div>
-    </div>
-    <div class="bg-white p-3 rounded-2xl mt-2">
-      <img src="/qr-github.png" alt="GitHub Repo" class="h-64 w-64" />
-    </div>
-    <div class="text-slate-300 font-mono text-xs mt-1">
-      github.com/awnion/slides-golang-leetcode
-    </div>
+<div class="grid grid-cols-2 gap-x-60 gap-y-4 justify-items-center w-full px-8">
+  <!-- Titles (Row 1) -->
+  <div class="text-teal-400 text-1xl font-bold text-center self-end">
+    Slides + Solutions + Tests
+  </div>
+  <div class="text-amber-400 text-1xl font-bold text-center self-end">
+    Let's Connect on LinkedIn 😉
   </div>
 
-  <!-- LinkedIn Card -->
-  <div class="flex flex-col items-center rounded-3xl">
-    <div class="mt-4 text-center flex flex-col items-center">
-      <div class="text-amber-400 text-1xl font-bold mb-2">Let's Connect on LinkedIn :)</div>
-    </div>
-    <div class="bg-white p-3 rounded-2xl mt-2">
-      <img src="/qr-linkedin.png" alt="LinkedIn" class="h-64 w-64" />
-    </div>
-    <div class="text-slate-300 font-mono text-xs mt-1">
-      linkedin.com/in/awnion
-    </div>
+  <!-- QR Codes (Row 2) -->
+  <div class="bg-white/90 p-3 rounded-2xl">
+    <img src="/qr-github.png" alt="GitHub Repo" class="h-60 w-60" />
+  </div>
+  <div class="bg-white/90 p-3 rounded-2xl">
+    <img src="/qr-linkedin.png" alt="LinkedIn" class="h-60 w-60" />
+  </div>
+
+  <!-- Links (Row 3) -->
+  <div class="font-mono text-xs">
+    github.com/awnion/slides-golang-leetcode
+  </div>
+  <div class="font-mono text-xs">
+    linkedin.com/in/awnion
   </div>
 </div>
 

@@ -1,6 +1,6 @@
 {
-  "name": "presentation-golang-leetcode",
-  "private": true,
+  "name": "slides-golang-leetcode",
+  "repository": "https://github.com/awnion/slides-golang-leetcode",
   "type": "module",
   "packageManager": "bun@1.3.10",
   "scripts": {

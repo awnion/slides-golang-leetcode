@@ -1,4 +1,4 @@
-# presentation-golang-leetcode
+# slides-golang-leetcode
 
 Slidev presentation about interview-style dynamic programming problems, with all solution slides written in Go.
 
