@@ -969,7 +969,6 @@ DP gets genuinely <b>hard</b>:
 
 Multi-agent optimization
 
-
 - 🤖 Two robots: **top-left** and **top-right**
 - ⬇️ Both move down one row per step
 - ↔️ Each can shift **-1**, **0**, or **+1** column
@@ -1024,8 +1023,9 @@ Multi-agent optimization
   <circle cx="100" cy="220" r="5" class="node-b" />
 
   <!-- A and B initial labels -->
-  <text x="100" y="45" font-family="sans-serif" font-size="12" font-weight="bold" fill="#2dd4bf" text-anchor="middle">1</text>
-  <text x="220" y="45" font-family="sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="middle">2</text>
+
+<text x="100" y="45" font-family="sans-serif" font-size="12" font-weight="bold" fill="#2dd4bf" text-anchor="middle">1</text>
+<text x="220" y="45" font-family="sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="middle">2</text>
 
   <!-- Transformation Arrow -->
   <path class="arrow" d="M 290 140 L 310 140" />
@@ -1052,8 +1052,9 @@ Multi-agent optimization
   <circle cx="500" cy="220" r="5" class="node-b" />
 
   <!-- A and B initial labels Right -->
-  <text x="380" y="45" font-family="sans-serif" font-size="12" font-weight="bold" fill="#2dd4bf" text-anchor="middle">1</text>
-  <text x="500" y="45" font-family="sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="middle">2</text>
+
+<text x="380" y="45" font-family="sans-serif" font-size="12" font-weight="bold" fill="#2dd4bf" text-anchor="middle">1</text>
+<text x="500" y="45" font-family="sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="middle">2</text>
 
   <!-- Highlight region where swap happens -->
   <!-- Left Side: highlight between row 1 and 2 -->
@@ -1092,8 +1093,8 @@ Meaning:
 - Last position of robots are NOT fixed `max(dp[rows-1][c1][c2]) for all c1, c2`
 
 - We need to deal with unreachable states
-  - If we go top to bottom, we need to initialize dp with `-Infinity` (or some value that is smaller than any possible value)
-  - If we go bottom to top, that's ok to initialize dp with 0, because in the end we just check `dp[0][0][cols-1]` and ignore other states on the top row
+    - If we go top to bottom, we need to initialize dp with `-Infinity` (or some value that is smaller than any possible value)
+    - If we go bottom to top, that's ok to initialize dp with 0, because in the end we just check `dp[0][0][cols-1]` and ignore other states on the top row
 
 So it's better to iterate from <span style="color: #2dd4bf">**bottom to top**</span>
 
@@ -1116,7 +1117,6 @@ dp[row - 1][col1][col2] =
   font-size: 0.9em !important;
 }
 </style>
-
 
 ---
 layout: two-cols
@@ -1195,22 +1195,23 @@ layout: two-cols
 // O(row * col) memory optimization
 func cherryPickupTwo(grid [][]int) int {
 	rows, cols := len(grid), len(grid[0])
-	next := make([][]int, cols)
+	prev := make([][]int, cols)
 	curr := make([][]int, cols)
 	for c := range cols {
-		next[c] = make([]int, cols)
+		prev[c] = make([]int, cols)
 		curr[c] = make([]int, cols)
 	}
 	// DP base : last row
 	for c1 := range cols {
 		for c2 := range cols {
-			next[c1][c2] = grid[rows-1][c1]
+			prev[c1][c2] = grid[rows-1][c1]
 			if c1 != c2 {
-				next[c1][c2] += grid[rows-1][c2]
+				prev[c1][c2] += grid[rows-1][c2]
 			}
 		}
 	}
 ```
+
 </div>
 
 :: right ::
@@ -1224,7 +1225,7 @@ func cherryPickupTwo(grid [][]int) int {
 					for nc2 := c2 - 1; nc2 <= c2+1; nc2++ {
 						if nc1 >= 0 && nc1 < cols &&
 							nc2 >= 0 && nc2 < cols {
-							best = max(best, next[nc1][nc2])
+							best = max(best, prev[nc1][nc2])
 						}
 					}
 				}
@@ -1234,9 +1235,9 @@ func cherryPickupTwo(grid [][]int) int {
 				}
 			}
 		}
-		next, curr = curr, next
+		prev, curr = curr, prev
 	}
-	return next[0][cols-1]
+	return prev[0][cols-1]
 }
 ```
 

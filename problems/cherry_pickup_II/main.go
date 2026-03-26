@@ -8,26 +8,18 @@ package main
 // Maximize total cherries collected; shared cell counts once.
 func cherryPickupTwo(grid [][]int) int {
 	rows, cols := len(grid), len(grid[0])
-	next, curr := make([][]int, cols), make([][]int, cols)
+	prev := make([][]int, cols)
+	curr := make([][]int, cols)
 	for c := range cols {
-		next[c] = make([]int, cols)
+		prev[c] = make([]int, cols)
 		curr[c] = make([]int, cols)
 	}
 
 	for c1 := range cols {
 		for c2 := range cols {
-			next[c1][c2] = grid[rows-1][c1]
+			prev[c1][c2] = grid[rows-1][c1]
 			if c1 != c2 {
-				next[c1][c2] += grid[rows-1][c2]
-			}
-		}
-	}
-
-	for c1 := range cols {
-		for c2 := range cols {
-			next[c1][c2] = grid[rows-1][c1]
-			if c1 != c2 {
-				next[c1][c2] += grid[rows-1][c2]
+				prev[c1][c2] += grid[rows-1][c2]
 			}
 		}
 	}
@@ -40,7 +32,7 @@ func cherryPickupTwo(grid [][]int) int {
 					for nc2 := c2 - 1; nc2 <= c2+1; nc2++ {
 						if nc1 >= 0 && nc1 < cols &&
 							nc2 >= 0 && nc2 < cols {
-							best = max(best, next[nc1][nc2])
+							best = max(best, prev[nc1][nc2])
 						}
 					}
 				}
@@ -50,9 +42,9 @@ func cherryPickupTwo(grid [][]int) int {
 				}
 			}
 		}
-		next, curr = curr, next
+		prev, curr = curr, prev
 	}
-	return next[0][cols-1]
+	return prev[0][cols-1]
 }
 
 // O(rows * cols^2) time, O(rows * cols^2) space
