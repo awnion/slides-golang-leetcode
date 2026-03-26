@@ -213,15 +213,94 @@ And yet… here we all are, grinding LeetCode at midnight 🌙
 <span class="accent">Richard Bellman</span> coined the term in the 1950s while working at RAND Corporation
 
 - "Programming" here means <span class="accent">planning</span> (as in "linear programming")
-- He deliberately chose a vague, impressive name to shield his research from politicians who were hostile to mathematics 🤷
+- <span class="text-[1.2em]">He deliberately chose a <span class="accent">vague, impressive</span> name to shield his research from <span class="text-red-400">politicians who were hostile to mathematics</span> 🤷 🫤 😵‍💫</span>
 
 ---
 layout: two-cols
 ---
 
-<div class="mt-2">
+# DP in the wild
 
-<div class="text-xs uppercase tracking-[0.2em] font-bold text-red-400 mb-4">Pure recursion — recomputes everything</div>
+<div class="text-xs uppercase tracking-[0.2em] font-bold text-[var(--text-muted)] mb-1">Networking & Routing</div>
+
+- <span class="accent">Dijkstra</span> <span class="text-[var(--text-muted)] text-sm">(conceived 1956 · published 1959)</span>
+- <span class="accent">Bellman–Ford</span> <span class="text-[var(--text-muted)] text-sm">(1955–1958)</span>
+    - Powers **RIP** routing of <span class="accent">ARPANET</span>
+    - Evolved into <span class="accent">RIP-2</span>
+
+<svg viewBox="0 0 224 172" class="flex inline-block h-70" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="wf" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <!-- non-path edges: 1-2, 3-4, 2-5 -->
+  <line x1="28" y1="92" x2="92" y2="26" stroke="#374151" stroke-width="1.5"/>
+  <line x1="92" y1="158" x2="188" y2="38" stroke="#374151" stroke-width="1.5"/>
+  <line x1="92" y1="26" x2="198" y2="116" stroke="#374151" stroke-width="1.5"/>
+  <!-- path edges: 1→3→2→4→5, wavy red -->
+  <g filter="url(#wf)">
+    <line x1="28" y1="92" x2="92" y2="158" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="92" y1="158" x2="92" y2="26" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="92" y1="26" x2="188" y2="38" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="188" y1="38" x2="198" y2="116" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <!-- weight labels non-path -->
+  <text x="54" y="52" fill="#6b7280" font-size="7" text-anchor="middle" font-family="monospace">4</text>
+  <text x="146" y="128" fill="#6b7280" font-size="7" text-anchor="middle" font-family="monospace">8</text>
+  <text x="152" y="75" fill="#6b7280" font-size="7" text-anchor="middle" font-family="monospace">10</text>
+  <!-- weight labels path -->
+  <text x="46" y="144" fill="#fca5a5" font-size="7" text-anchor="middle" font-family="monospace" font-weight="bold">2</text>
+  <text x="100" y="97" fill="#fca5a5" font-size="7" text-anchor="start" font-family="monospace" font-weight="bold">1</text>
+  <text x="143" y="25" fill="#fca5a5" font-size="7" text-anchor="middle" font-family="monospace" font-weight="bold">3</text>
+  <text x="202" y="78" fill="#fca5a5" font-size="7" text-anchor="middle" font-family="monospace" font-weight="bold">1</text>
+  <!-- nodes -->
+  <circle cx="28" cy="92" r="13" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="92" cy="26" r="13" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="92" cy="158" r="13" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="188" cy="38" r="13" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="198" cy="116" r="13" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+  <!-- node labels -->
+  <text x="28" y="92" fill="#e2e8f0" font-size="5" text-anchor="middle" dominant-baseline="central" font-family="monospace" font-weight="bold">1</text>
+  <text x="92" y="26" fill="#e2e8f0" font-size="5" text-anchor="middle" dominant-baseline="central" font-family="monospace" font-weight="bold">2</text>
+  <text x="92" y="158" fill="#e2e8f0" font-size="5" text-anchor="middle" dominant-baseline="central" font-family="monospace" font-weight="bold">3</text>
+  <text x="188" y="38" fill="#e2e8f0" font-size="5" text-anchor="middle" dominant-baseline="central" font-family="monospace" font-weight="bold">4</text>
+  <text x="198" y="116" fill="#e2e8f0" font-size="5" text-anchor="middle" dominant-baseline="central" font-family="monospace" font-weight="bold">5</text>
+</svg>
+
+::right::
+
+<div class="text-xs uppercase tracking-[0.2em] font-bold text-[var(--text-muted)] mb-1">Bioinformatics</div>
+
+- <span class="accent">Needleman–Wunsch</span> <span class="text-[var(--text-muted)] text-sm">(1970)</span>
+    - Global DNA/protein sequence alignment
+    - Foundation behind BLAST, ClustalW
+
+<img src="/dna-lcs.png" class="h-35" alt="DNA common subsequence" />
+
+<div class="mt-12 text-xs uppercase tracking-[0.2em] font-bold text-[var(--text-muted)] mb-1">Signal & Sequence Decoding</div>
+
+- <span class="accent">Viterbi</span> <span class="text-[var(--text-muted)] text-sm">(1967)</span>
+    - <span class="accent">LTE/5G</span>, WiFi, satellite — error correction
+    - Speech recognition, voice assistants
+    - POS tagging, NER in NLP
+
+---
+layout: center
+---
+
+<div class="flex flex-col items-center gap-6">
+  <div class="text-3xl font-bold">It's <span class="accent">actually</span> really <span class="text-yellow-400">simple</span></div>
+  <img src="https://i.imgflip.com/1itoun.jpg" class="h-[380px] rounded-xl" alt="Charlie Day conspiracy board meme" />
+  <div class="text-3xl font-bold">let me <span class="text-red-400">explain</span></div>
+</div>
+
+---
+layout: two-cols
+---
+
+<div class="text-xs uppercase tracking-[0.2em] font-bold text-red-400 mb-3">Pure recursion — recomputes everything</div>
 
 ```mermaid {scale: 0.7}
 graph TD
@@ -242,7 +321,7 @@ graph TD
 
 <div class="text-xs uppercase tracking-[0.2em] font-bold text-green-400 mb-4 mt-8">DP — each subproblem solved once</div>
 
-```mermaid {scale: 0.7}
+```mermaid {scale: 0.8}
 graph LR
   A["f(0)"] --> B["f(1)"]
   B --> C["f(2)"]
@@ -257,8 +336,6 @@ graph LR
   style D fill:#2a5c3f,stroke:#6ee7a0,color:#6ee7a0
   style E fill:#2a5c3f,stroke:#6ee7a0,color:#6ee7a0
 ```
-
-</div>
 
 ::right::
 
@@ -508,7 +585,7 @@ layout: center
 ---
 
 <div class="text-center">
-  <div class="text-6xl mb-8">🐧</div>
+  <img src="/linus.jpg" class="h-52 rounded-full object-cover mx-auto mb-8" alt="Linus Torvalds" />
   <div class="text-4xl font-bold italic">"Talk is cheap.</div>
   <div class="text-4xl font-bold italic mb-6">Show me the <span class="text-[var(--brand-accent)]">code</span>."</div>
   <div class="text-lg text-gray-500">— Linus Torvalds</div>
